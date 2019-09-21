@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "货品详情",
+  "usingComponents": {
+    "mp-cell": "/weui/cell/cell",
+    "mp-cells": "/weui/cells/cells"
+  }
+}

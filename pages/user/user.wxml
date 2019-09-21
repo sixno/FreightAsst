@@ -1,0 +1,14 @@
+<!--pages/user/user.wxml-->
+
+<view class="avatar-wrap" style="position:fixed;left:0;top:0;width:100%;box-sizing:border-box;height:151px;">
+  <view class="avatar"><image mode="aspectFit" src="{{userInfo.avatarUrl}}"></image></view>
+  <view style="text-align:center;padding:10px 0;">
+    <text style="margin-right:10px;">{{userInfo.nickName}}</text>
+    <text wx:if="{{vip > 0}}" class="vip" style="color:red;border-color:red;">VIP {{vip}}</text><text wx:else class="vip">VIP 0</text>
+  </view>
+</view>
+
+<mp-tabbar style="position:fixed;top:151px;width:100%;left:0;right:0;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
+
+<view style="position:fixed;top:189px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+</view>

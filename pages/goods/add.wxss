@@ -1,0 +1,33 @@
+/* pages/goods/add.wxss */
+
+.size-add {
+  position: absolute;
+  top: -30px;
+  right: 16px;
+  color: #07C160;
+}
+
+.size-remove {
+  color: white;
+  background: red;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  text-align: center;
+  line-height: 16px;
+  font-size: 32px;
+}
+
+.size-model {
+  margin-right: 100px;
+}
+
+.size-unit {
+  width: 48px;
+  position: absolute;
+  top: 16px;
+  right: 52px;
+}

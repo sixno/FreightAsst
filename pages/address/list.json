@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "地址管理",
+  "usingComponents": {
+    "mp-searchbar": "/weui/searchbar/searchbar",
+    "mp-slideview": "/weui/slideview/slideview",
+    "mp-cells": "/weui/cells/cells",
+    "mp-cell": "/weui/cell/cell",
+    "mp-tabbar": "/weui/tabbar/tabbar"
+  }
+}

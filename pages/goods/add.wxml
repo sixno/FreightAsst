@@ -1,0 +1,39 @@
+<!--pages/goods/add.wxml-->
+
+<view class="page">
+  <view class="page__bd">
+    <mp-form id="form" rules="{{rules}}" models="{{formData}}">
+      <mp-cells title="货品信息" footer="">
+        <mp-cell show-error prop="goods_cover">
+          <mp-uploader bindfail="uploadError" bindsuccess="uploadSuccess" delete="true" binddelete="uploadDelete" select="{{selectFile}}" upload="{{uplaodFile}}" files="{{files}}" title="货品缩略图" max-count="1"></mp-uploader>
+        </mp-cell>
+
+        <mp-cell show-error prop="goods_name" title="货品名称" ext-class="">
+          <input bindinput="formInputChange" data-field="goods_name" class="weui-input" placeholder="请输入货品名称" value=""/>
+        </mp-cell>
+
+        <mp-cell show-error prop="goods_content" title="货品描述" ext-class="weui-cell_label-block">
+          <textarea bindinput="formInputChange" data-field="goods_content" class="weui-input" style="height:120px;width:100%;" placeholder="请输入货品描述" value=""/>
+        </mp-cell>
+      </mp-cells>
+
+      <mp-cells title="货品规格" footer="提示：以猕猴桃为例，货品型号可以填“极品果（24个/箱）”，单位可以填“箱”，货品规格至少填一项。">
+        <view bindtap="addSize" class="size-add">+ 添加规格</view>
+        <block wx:if="{{sizes}}">
+          <mp-cell show-error prop="goods_size" style="position:relative;" wx:for="{{sizes}}">
+            <view class="weui-cell__hd" class="size-model">
+              <input bindinput="formInputChange" data-field="goods_size_model_{{index}}" class="weui-input" placeholder="货品型号" value="{{item.model}}"/>
+            </view>
+            <view class="weui-cell__hd" class="size-unit">
+              <input bindinput="formInputChange" data-field="goods_size_unit_{{index}}" class="weui-input" placeholder="单位" value="{{item.unit}}"/>
+            </view>
+            <view bindtap="removeSize" data-index="{{index}}" class="size-remove">-</view>
+          </mp-cell>
+        </block>
+      </mp-cells>
+    </mp-form>
+    <view class="weui-btn-area-padding">
+      <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+    </view>
+  </view>
+</view>

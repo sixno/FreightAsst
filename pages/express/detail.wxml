@@ -1,0 +1,16 @@
+<!--pages/express/detail.wxml-->
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-article">
+        <view class="weui-article__h1">{{name}}</view>
+        <view class="weui-article__section">
+          <view class="weui-article__h2">国内服务热线：<text style="color:red">{{tel}}</text></view>
+          <view class="weui-article__section">
+            <view class="weui-article__h3">　</view>
+            <view class="weui-article__p" wx:for="{{intro_p}}">{{item}}</view>
+          </view>
+        </view>
+    </view>
+  </view>
+</view>

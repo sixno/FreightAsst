@@ -1,0 +1,5 @@
+<view class="block">
+  <view class="avatar"><image mode="aspectFit" src="../../img/logo.png"></image></view>
+  <view>您尚未授权登录或登录状态已过期，请点击下方按钮授权登录，授权登录将获取您的微信头像、微信昵称等信息。</view>
+  <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="save-btn">授权登录</button>
+</view>

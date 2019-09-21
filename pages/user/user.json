@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "mp-tabbar": "/weui/tabbar/tabbar"
+  }
+}

@@ -1,0 +1,31 @@
+/* pages/user/user.wxss */
+
+.avatar-wrap {
+  padding-top: 10px;
+  background: linear-gradient(#1B827E, #F7F7F7);
+}
+
+.avatar-wrap .avatar image {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+
+.avatar-wrap .vip {
+  border: #666666 solid 1px;
+  border-radius: 4px;
+  padding: 0 5px;
+  color: #666666;
+}
+
+.weui-tabbar:before {
+  border: none !important;
+}
+
+.top-tabbar image {
+  display: none;
+}
+
+.top-tabbar .weui-tabbar__label{
+  font-size: 16px;
+}

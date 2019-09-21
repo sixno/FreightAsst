@@ -1,0 +1,50 @@
+<!--index.wxml-->
+
+<view class="top-welcome">
+  <block wx:if="{{!userInfo}}">
+    <image class="top-avatar" src="../../img/logo.png" mode="cover"></image>
+    <text class="top-nickname">未登录</text>
+  </block>
+  <block wx:else>
+    <image class="top-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="top-nickname">{{userInfo.nickName}} <text wx:if="{{vip > 0}}" style="color:red">VIP {{vip}}</text><text wx:else>VIP 0</text></text>
+  </block>
+</view>
+
+<view class="row">
+  <view class="col">
+    <navigator url="/pages/goods/list" hover-class="none"><view><image src="/img/index/goods.svg"></image></view></navigator>
+    <view><text>货品管理</text></view>
+  </view>
+  <view class="col col-r">
+    <navigator url="/pages/address/list" hover-class="none"><view><image src="/img/index/address.svg"></image></view></navigator>
+    <view><text>地址管理</text></view>
+  </view>
+</view>
+
+<view class="row">
+  <view class="col">
+    <view><image src="/img/index/order.svg"></image></view>
+    <view><text>快速填单</text></view>
+  </view>
+  <view class="col col-r">
+    <view><image src="/img/index/stamp.svg"></image></view>
+    <view><text>货品收藏</text></view>
+  </view>
+</view>
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-cells__title">推广活动及使用说明</view>
+    <view class="weui-cells weui-cells_after-title">
+      <navigator url="/pages/article/article?article_id=2" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">邀请3位好友使用，送一年<text style="color:red;">VIP 1</text></view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </navigator>
+      <navigator url="/pages/article/article?article_id=1" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <view class="weui-cell__bd">小程序使用说明及隐私条款</view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </navigator>
+    </view>
+  </view>
+</view>

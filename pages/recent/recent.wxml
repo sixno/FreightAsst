@@ -1,0 +1,9 @@
+<!--pages/recent/recent.wxml-->
+
+
+<mp-searchbar style="position:fixed;top:0;left:0;width:100%;" placeholder="请输入关键字搜索" bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
+
+<mp-tabbar style="position:fixed;top:48px;width:100%;left:0;right:0;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
+
+<view style="position:fixed;top:86px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+</view>

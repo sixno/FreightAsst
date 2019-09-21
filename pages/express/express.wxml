@@ -1,0 +1,27 @@
+<!--pages/express/express.wxml-->
+
+<view class="page">
+  <view class="page__bd" style="padding-top:10px;">
+    <block wx:if="list">
+      <block wx:for="{{list}}" wx:key="id">
+        <view class="weui-panel">
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+                <view class="weui-media-box__title weui-media-box__title_in-text">
+                  <text>{{item.name}}</text>
+                  <text style="float:right;color:red;">{{item.tel}}</text>
+                </view>
+                <view class="weui-media-box__desc">{{item.intro}}</view>
+                <view class="weui-media-box__info">
+                  <view class="weui-media-box__info__meta">{{item.update_time}}</view>
+                  <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                    <navigator url="/pages/express/detail?freight_company_id={{item.id}}" hover-class="none">详情</navigator>
+                  </view>
+                </view>
+              </view>
+            </view>
+        </view>
+      </block>
+    </block>
+  </view>
+</view>

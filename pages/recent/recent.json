@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "近期物流",
+  "usingComponents": {
+    "mp-searchbar": "/weui/searchbar/searchbar",
+    "mp-tabbar": "/weui/tabbar/tabbar"
+  }
+}

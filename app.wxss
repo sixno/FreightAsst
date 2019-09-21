@@ -1,0 +1,98 @@
+/**app.wxss**/
+@import '/weui/weui-wxss/dist/style/weui.wxss';
+
+.weui-cell__bd {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.weui-btn-area-padding {
+  padding: 48px 16px 8px;
+}
+
+.block, .wrap {
+  padding: 16px;
+}
+
+.block view {
+  margin-bottom: 48px;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+}
+
+.avatar image {
+  width: 128px;
+  height: 128px;
+}
+
+.top-welcome {
+  box-sizing: border-box;
+  display: block;
+  height: 59px;
+  border-bottom: #aaa dashed 1px;
+}
+
+.top-avatar {
+  display: block;
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin: 5px;
+  border-radius: 50%;
+}
+
+.top-nickname {
+  color: #aaa;
+  display: block;
+  float: left;
+  height: 58px;
+  line-height: 58px;
+}
+
+.row {
+  border-bottom: #aaa dashed 1px;
+  display: flex;
+  width: 100%;
+}
+
+.row .col {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 10px 0;
+}
+
+.col view {
+  display: flex;
+  justify-content: center;
+}
+
+.row .col-r {
+  border-left: #aaa dashed 1px;
+}
+
+.col image {
+  height:100px;
+}
+
+.bottom-button {
+  box-sizing: border-box;
+  border-top: #EAEAEA solid 1px;
+  background: #F7F7F7;
+  display: block;
+  height: 60px;
+  width: 100%;
+  line-height: 60px;
+  color: #07C160;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 20px;
+}

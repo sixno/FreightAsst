@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/recent/recent",
+    "pages/express/express",
+    "pages/express/detail",
+    "pages/user/user",
+    "pages/user/login",
+    "pages/article/article",
+    "pages/goods/list",
+    "pages/goods/item",
+    "pages/goods/add",
+    "pages/goods/mod",
+    "pages/goods/pick",
+    "pages/address/list",
+    "pages/address/edit",
+    "pages/address/pick",
+    "pages/freight/freight",
+    "pages/freight/add",
+    "pages/freight/mod"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1B827E",
+    "navigationBarTitleText": "货运助理",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#1B827E",
+    "backgroundColor": "#dddddd",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "img/tabbar/home.png",
+        "selectedIconPath": "img/tabbar/home2.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/recent/recent",
+        "iconPath": "img/tabbar/clock.png",
+        "selectedIconPath": "img/tabbar/clock2.png",
+        "text": "近期物流"
+      },
+      {
+        "pagePath": "pages/express/express",
+        "iconPath": "img/tabbar/truck.png",
+        "selectedIconPath": "img/tabbar/truck2.png",
+        "text": "快递服务"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "img/tabbar/user.png",
+        "selectedIconPath": "img/tabbar/user2.png",
+        "text": "我"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

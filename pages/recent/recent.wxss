@@ -1,0 +1,9 @@
+/* pages/recent/recent.wxss */
+
+.top-tabbar image {
+  display: none;
+}
+
+.top-tabbar .weui-tabbar__label{
+  font-size: 16px;
+}

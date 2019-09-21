@@ -1,0 +1,19 @@
+<!--pages/goods/list.wxml-->
+
+<mp-searchbar style="position:fixed;top:0;left:0;width:100%;z-index:1000000;" placeholder="请输入关键字搜索" bindinput="searchInput" bindclear="clearSearchInput" search="{{search}}" value="{{search_value}}"></mp-searchbar>
+
+<scroll-view bindscrolltolower="reachEnd" scroll-y style="position:fixed;top:48px;bottom:60px;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+  <block wx:if="{{list}}">
+    <mp-cells>
+      <block wx:for="{{list}}" wx:key="id"><block wx:if="{{!item.deleted}}">
+        <mp-slideview bindshow="slideShow" bindhide="slideHide" data-index="{{index}}" data-id="{{item.id}}" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
+          <mp-cell link bindtap="itemTap" data-index="{{index}}" data-id="{{item.id}}" icon="{{item.cover}}" value="{{item.name}}" footer=""></mp-cell>
+        </mp-slideview>
+      </block></block>
+    </mp-cells>
+  </block>
+</scroll-view>
+
+<view class="bottom-button">
+  <navigator url="/pages/goods/add" hover-class="none"><text style="font-size:28px;">+</text> <text style="position:relative;top:-2px;">添加货品</text></navigator>
+</view>

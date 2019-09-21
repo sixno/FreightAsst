@@ -1,0 +1,9 @@
+/* pages/address/list.wxss */
+
+.default .weui-cell__bd{
+  color: red;
+}
+
+.default .weui-cell__ft{
+  color: rgb(255, 155, 155);
+}

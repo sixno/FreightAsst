@@ -1,0 +1,26 @@
+<!--pages/address/list.wxml-->
+
+<block wx:if="{{!tab}}">
+  <view style="position:fixed;top:0;bottom:60px;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+    <mp-cells>
+      <block wx:for="{{list}}" wx:key="id"><block wx:if="{{!item.deleted}}">
+        <mp-slideview data-index="{{index}}" data-id="{{item.id}}" buttons="{{slideButtons}}" data-copy="{{item.name}} {{item.tel}} {{item.full}}" bindbuttontap="slideButtonTap">
+          <mp-cell value="{{item.city}}{{item.county}}{{item.detail}}" footer="{{item.name}}" ext-class="{{item.default == 1 ? 'default' : ''}}"></mp-cell>
+        </mp-slideview>
+      </block></block>
+    </mp-cells>
+
+    <view class="weui-btn-area">
+      <button type="primary" bindtap="addAddress">新增地址</button>
+    </view>
+  </view>
+</block>
+
+<block wx:else>
+  <mp-searchbar style="position:fixed;top:0;left:0;width:100%;" placeholder="请输入关键字搜索" bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
+
+  <view style="position:fixed;top:48px;bottom:60px;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+  </view>
+</block>
+
+<mp-tabbar style="position:fixed;bottom:0;width:100%;left:0;right:0;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}"></mp-tabbar>
