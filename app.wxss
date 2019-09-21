@@ -35,36 +35,39 @@
 .top-welcome {
   box-sizing: border-box;
   display: block;
-  height: 59px;
-  border-bottom: #aaa dashed 1px;
+  height: 50px;
+  margin: 20px;
+  border-radius: 200px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, .07);
+  /* border-bottom: #aaa dashed 1px; */
 }
 
 .top-avatar {
   display: block;
   float: left;
-  width: 48px;
-  height: 48px;
-  margin: 5px;
-  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  margin: 2px;
+  border-radius: 200px;
 }
 
 .top-nickname {
   color: #aaa;
   display: block;
   float: left;
-  height: 58px;
-  line-height: 58px;
+  line-height: 50px;
 }
 
 .row {
-  border-bottom: #aaa dashed 1px;
+  /* border-bottom: #aaa dashed 1px; */
   display: flex;
   width: 100%;
+  justify-content: center;
 }
 
 .row .col {
   box-sizing: border-box;
-  width: 50%;
+  width: 44%;
   padding: 10px 0;
 }
 
@@ -74,7 +77,7 @@
 }
 
 .row .col-r {
-  border-left: #aaa dashed 1px;
+  /* border-left: #aaa dashed 1px; */
 }
 
 .col image {
