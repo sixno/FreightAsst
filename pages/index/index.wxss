@@ -1,1 +1,4 @@
 /**index.wxss**/
+.col-hover {
+  background: rgba(0, 0, 0, 0.05);
+}

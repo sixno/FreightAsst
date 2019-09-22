@@ -12,22 +12,22 @@
 </view>
 
 <view class="row">
-  <view class="col">
+  <view class="col" hover-class="col-hover">
     <navigator url="/pages/goods/list" hover-class="none"><view><image src="/img/index/goods.svg"></image></view></navigator>
     <view><text>货品管理</text></view>
   </view>
-  <view class="col col-r">
+  <view class="col col-r" hover-class="col-hover">
     <navigator url="/pages/address/list" hover-class="none"><view><image src="/img/index/address.svg"></image></view></navigator>
     <view><text>地址管理</text></view>
   </view>
 </view>
 
 <view class="row">
-  <view class="col">
+  <view class="col" hover-class="col-hover">
     <view><image src="/img/index/order.svg"></image></view>
     <view><text>快速填单</text></view>
   </view>
-  <view class="col col-r">
+  <view class="col col-r" hover-class="col-hover">
     <view><image src="/img/index/stamp.svg"></image></view>
     <view><text>货品收藏</text></view>
   </view>

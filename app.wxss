@@ -1,6 +1,10 @@
 /**app.wxss**/
 @import '/weui/weui-wxss/dist/style/weui.wxss';
 
+.wxParse-p {
+  padding: 10px 0;
+}
+
 .weui-cell__bd {
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;

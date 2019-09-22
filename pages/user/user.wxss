@@ -1,7 +1,6 @@
 /* pages/user/user.wxss */
 
 .avatar-wrap {
-  padding-top: 10px;
   background: linear-gradient(#1B827E, rgb(21, 107, 104));
   color: #fff;
 }

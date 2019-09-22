@@ -21,6 +21,10 @@
   font-size: 32px;
 }
 
+.page__bd {
+  padding: 20px;
+}
+
 .size-model {
   margin-right: 100px;
 }
