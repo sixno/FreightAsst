@@ -98,7 +98,7 @@ Page({
       that.login();
     }
   },
-  login: function () {console.log('fffff');
+  login: function () {
     let that = this;
     wx.login({
       success: function (res) {

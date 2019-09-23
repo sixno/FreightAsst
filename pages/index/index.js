@@ -28,8 +28,6 @@ Page({
       userInfo: wx.getStorageSync('userInfo'),
       api_user: app.api_user()
     });
-
-    console.log('get_user',that.data.api_user)
   },
   getUserInfo: function(e) {
     console.log(e)

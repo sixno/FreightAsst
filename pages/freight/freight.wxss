@@ -1,1 +1,17 @@
 /* pages/freight/freight.wxss */
+
+.square {
+  box-sizing: border-box;
+  padding-top: 20px;
+  width: 200px;
+  height: 200px;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, .07);
+  margin: 30px auto;
+  text-align: center;
+  color: #384D68;
+}
+
+.square-hover {
+  background: rgba(0, 0, 0, 0.05);
+}

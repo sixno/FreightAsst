@@ -24,7 +24,7 @@
 
 <view class="row">
   <view class="col" hover-class="col-hover">
-    <view><image src="/img/index/order.svg"></image></view>
+    <navigator url="/pages/freight/freight" hover-class="none"><view><image src="/img/index/order.svg"></image></view></navigator>
     <view><text>快速填单</text></view>
   </view>
   <view class="col col-r" hover-class="col-hover">

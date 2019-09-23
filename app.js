@@ -154,7 +154,7 @@ App({
 
       api_user = wx.getStorageSync('api_user');
     }
-console.log('api_user',api_user)
+
     if(!key) return api_user;
 
     return api_user[key];
