@@ -33,13 +33,8 @@ Page({
     var that = this;
 
     this.setData({
-      userInfo: wx.getStorageSync('userInfo')
-    });
-
-    app.api_request('user/current', '', function (res) {
-      if (res.out == 1) {
-        that.setData({ vip: res.data.vip, vip_end_time: res.data.vip_end_time });
-      }
+      userInfo: wx.getStorageSync('userInfo'),
+      api_user: app.api_user()
     });
   },
 
@@ -54,14 +49,18 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    var that = this;
+
+    app.refresh_page(function () {
+      that.getUser();
+    });
   },
 
   /**

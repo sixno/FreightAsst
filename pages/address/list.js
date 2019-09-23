@@ -163,11 +163,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.refresh_show == 'pages/address/list') {
-      app.refresh_show = false;
+    var that = this;
 
-      this.getList(this.data.tab);
-    }
+    app.refresh_page(function () {
+      that.getList(that.data.tab);
+    });
   },
 
   /**

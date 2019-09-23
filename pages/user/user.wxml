@@ -4,7 +4,7 @@
   <view class="avatar"><image mode="aspectFit" src="{{userInfo.avatarUrl}}"></image></view>
   <view style="text-align:center;padding:20px 0;">
     <text style="margin-right:10px;">{{userInfo.nickName}}</text>
-    <text wx:if="{{vip > 0}}" class="vip" style="color:red;border-color:red;">VIP {{vip}}</text><text wx:else class="vip">VIP 0</text>
+    <text wx:if="{{api_user.vip > 0}}" class="vip" style="color:red;border-color:red;">VIP {{api_user.vip}}</text><text wx:else class="vip">VIP 0</text>
   </view>
 </view>
 

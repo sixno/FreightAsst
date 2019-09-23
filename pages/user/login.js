@@ -105,7 +105,7 @@ Page({
         if (res.code) {
           app.api_request('user/wx_login', { code: res.code }, function (res) {
             if (res.out == 1) {
-              wx.setStorageSync('api_user_id', res.data.id);
+              wx.setStorageSync('api_user', res.data);
               that.sendUserInfoToServer();
             }
             else {
@@ -124,6 +124,7 @@ Page({
 
     app.api_request('user/wx_update', userInfo, function (res) {
       if (res.out == 1) {
+        wx.setStorageSync('api_user', res.data);
         wx.navigateBack({});
       }
       else {

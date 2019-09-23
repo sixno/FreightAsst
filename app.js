@@ -146,17 +146,37 @@ App({
 
     wx.uploadFile(args);
   },
-  check_login: function () {
-    if (!wx.getStorageSync('userInfo')) {
-      wx.navigateTo({ url: "/pages/user/login" });
+  api_user: function(key){
+    var api_user = wx.getStorageSync('api_user');
+
+    if(!api_user){
+      this.check_login();
+
+      api_user = wx.getStorageSync('api_user');
     }
-    else {
-      wx.checkSession({
-        fail: function () {
+console.log('api_user',api_user)
+    if(!key) return api_user;
+
+    return api_user[key];
+  },
+  check_login: function () {
+    this.api_request('user/current','',function(res){
+      if(res.out == 1)
+      {
+        wx.setStorageSync('api_user',res.data);
+
+        if (!wx.getStorageSync('userInfo')) {
           wx.navigateTo({ url: "/pages/user/login" });
         }
-      });
-    }
+        else {
+          wx.checkSession({
+            fail: function () {
+              wx.navigateTo({ url: "/pages/user/login" });
+            }
+          });
+        }
+      }
+    });
   },
   date: function (format, time) {
     var format = format || 'yyyy-MM-dd hh:mm:ss';
@@ -192,5 +212,15 @@ App({
     return format;
   },
   dat_page: null,
-  refresh_show: false
+  refresh_show: false,
+  refresh_page: function(callback){
+    var cps = getCurrentPages();
+    var cp = cps[cps.length - 1].route;
+
+    if (cp == this.refresh_show) {
+      this.refresh_show = false;
+
+      if(callback) callback();
+    }
+  }
 })

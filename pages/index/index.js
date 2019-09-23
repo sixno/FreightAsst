@@ -1,5 +1,4 @@
-//index.js
-//获取应用实例
+// pages/index/index.js
 const app = getApp();
 
 Page({
@@ -14,25 +13,23 @@ Page({
     this.getUser();
   },
   onShow: function () {
-    if (app.refresh_show == 'pages/index/index') {
-      app.refresh_show = false;
+    var that = this;
 
-      this.getUser();
-    }
+    app.refresh_page(function () {
+      console.log('bbb');
+      that.getUser();
+    });
   },
   getUser: function()
   {
     var that = this;
 
     this.setData({
-      userInfo: wx.getStorageSync('userInfo')
+      userInfo: wx.getStorageSync('userInfo'),
+      api_user: app.api_user()
     });
 
-    app.api_request('user/current', '', function (res) {
-      if (res.out == 1) {
-        that.setData({ vip: res.data.vip, vip_end_time: res.data.vip_end_time });
-      }
-    });
+    console.log('get_user',that.data.api_user)
   },
   getUserInfo: function(e) {
     console.log(e)
