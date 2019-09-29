@@ -3,7 +3,10 @@
 <view class="page">
   <view class="page__bd">
     <view class="weui-article">
-      <view class="weui-article__h1">{{name}}</view>
+      <view bindtap="doFavor" data-favor="{{is_favor}}" style="float:right;">
+        <image src="/img/goods/{{is_favor == 1 ? 'star2.svg' : 'star.svg'}}" style="width:32px;height:32px;"></image>
+      </view>
+      <view class="weui-article__h1" style="margin-right:40px;">{{name}}</view>
 
       <view class="avatar" style="margin:16px 0;">
         <image src="{{cover}}" style="width:160px;height:160px;"></image>
@@ -19,7 +22,16 @@
         <view class="weui-article__section">
           <mp-cells>
             <block wx:for="{{size}}" wx:key="id">
-              <mp-cell value="{{item.model}}" footer="{{item.unit}}"></mp-cell>
+              <mp-cell>
+                <view class="weui-cell__hd size-model">{{item.model}}</view>
+                <view class="weui-cell__hd size-detail">
+                  <view class="round-minus" bindtap="detailMinus" data-index="{{index}}" data-value="{{item.detail || 0}}">-</view>
+                  <input class="weui-input"  bindinput="detailChange" data-index="{{index}}" data-value="{{item.detail || 0}}" value="{{item.detail || 0}}"/>
+                  <view class="round-plus" bindtap="detailPlus" data-index="{{index}}" data-value="{{item.detail || 0}}">+</view>
+                </view>
+                <view class="weui-cell__hd size-unit">{{item.unit}}</view>
+                <view class="buy" bindtap="getOrder" data-index="{{index}}">下单</view>
+              </mp-cell>
             </block>
           </mp-cells>
         </view>

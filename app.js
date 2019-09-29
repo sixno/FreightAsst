@@ -178,6 +178,9 @@ App({
       }
     });
   },
+  freight_trace: function(freight_no,callback){
+    
+  },
   date: function (format, time) {
     var format = format || 'yyyy-MM-dd hh:mm:ss';
     var time = time || '';

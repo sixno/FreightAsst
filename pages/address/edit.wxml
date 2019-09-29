@@ -25,6 +25,10 @@
         <mp-cell show-error prop="address_detail" title="" ext-class="">
           <textarea bindinput="formInputChange" data-field="address_detail" class="weui-input" style="height:72px;width:100%;" placeholder="请输入详细地址" value="{{detail}}"/>
         </mp-cell>
+
+        <mp-cell show-error prop="address_zipcode" title="邮编" ext-class="">
+          <input bindinput="formInputChange" data-field="address_zipcode" class="weui-input" placeholder="请输入邮编" value="{{zipcode}}"/>
+        </mp-cell>
       </mp-cells>
     </mp-form>
     <view class="weui-btn-area">

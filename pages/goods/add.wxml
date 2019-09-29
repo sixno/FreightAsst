@@ -21,10 +21,10 @@
         <view bindtap="addSize" class="size-add">+ 添加规格</view>
         <block wx:if="{{sizes}}">
           <mp-cell show-error prop="goods_size" style="position:relative;" wx:for="{{sizes}}">
-            <view class="weui-cell__hd" class="size-model">
+            <view class="weui-cell__hd size-model">
               <input bindinput="formInputChange" data-field="goods_size_model_{{index}}" class="weui-input" placeholder="货品型号" value="{{item.model}}"/>
             </view>
-            <view class="weui-cell__hd" class="size-unit">
+            <view class="weui-cell__hd size-unit">
               <input bindinput="formInputChange" data-field="goods_size_unit_{{index}}" class="weui-input" placeholder="单位" value="{{item.unit}}"/>
             </view>
             <view bindtap="removeSize" data-index="{{index}}" class="size-remove">-</view>

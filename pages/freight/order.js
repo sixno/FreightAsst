@@ -1,4 +1,4 @@
-// pages/freight/add.js
+// pages/freight/order.js
 const app = getApp();
 
 Page({
@@ -7,22 +7,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    formData: {freight_from_user_id: app.api_user('id')},
+    formData: { freight_to_user_id: app.api_user('id') },
     rules: [{
-      name: 'freight_from_name',
-      rules: [{ required: true, message: '发货人必填' }],
+      name: 'freight_to_name',
+      rules: [{ required: true, message: '收货人必填' }],
     }, {
-      name: 'freight_from_tel',
+      name: 'freight_to_tel',
       rules: [{ required: true, message: '联系方式必填' }],
     }, {
-      name: 'freight_from_address',
+      name: 'freight_to_address',
       rules: [{ required: true, message: '地址必填' }],
     }],
     contents: [],
     address: {},
     address_lock: false
   },
-  addCustomGoods: function(){
+  addCustomGoods: function () {
     var that = this;
     var index = that.data.contents.length;
 
@@ -53,7 +53,7 @@ Page({
 
     this.setData({ formData: formData, contents: contents });
   },
-  clearAddress: function (e){
+  clearAddress: function (e) {
     var that = this;
 
     var update = {};
@@ -61,11 +61,11 @@ Page({
     update.address = {};
     update.address_lock = false;
 
-    update['formData.freight_from_address_id'] = '0';
-    update['formData.freight_from_name'] = '';
-    update['formData.freight_from_tel'] = '';
-    update['formData.freight_from_address'] = '';
-    update['formData.freight_from_zipcode'] = '';
+    update['formData.freight_to_address_id'] = '0';
+    update['formData.freight_to_name'] = '';
+    update['formData.freight_to_tel'] = '';
+    update['formData.freight_to_address'] = '';
+    update['formData.freight_to_zipcode'] = '';
 
     that.setData(update);
   },
@@ -150,10 +150,6 @@ Page({
             });
           }
         });
-
-        // wx.showToast({
-        //   title: '校验通过'
-        // });
       }
     })
   },
@@ -164,24 +160,30 @@ Page({
   onLoad: function (options) {
     var that = this;
 
-    app.api_request('address/def','',function(res){
-      if(res.out == 1)
-      {
+    app.api_request('address/def', '', function (res) {
+      if (res.out == 1) {
         var update = {};
 
         update.address = res.data;
         update.address_lock = true;
 
-        update['formData.freight_from_address_id'] = res.data.id;
-        update['formData.freight_from_name'] = res.data.name;
-        update['formData.freight_from_tel'] = res.data.tel;
-        update['formData.freight_from_address'] = res.data.full;
-        update['formData.freight_from_zipcode'] = res.data.zipcode;
-        update['formData.freight_from_confirm'] = 1;
+        update['formData.freight_to_address_id'] = res.data.id;
+        update['formData.freight_to_name'] = res.data.name;
+        update['formData.freight_to_tel'] = res.data.tel;
+        update['formData.freight_to_address'] = res.data.full;
+        update['formData.freight_to_zipcode'] = res.data.zipcode;
+        update['formData.freight_to_confirm'] = 1;
 
         that.setData(update);
       }
     });
+
+    if(options.goods)
+    {
+      var goods = JSON.parse(decodeURIComponent(options.goods));
+
+      console.log(goods);
+    }
   },
 
   /**

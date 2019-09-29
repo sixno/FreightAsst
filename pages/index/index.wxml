@@ -28,7 +28,7 @@
     <view><text>快速填单</text></view>
   </view>
   <view class="col col-r" hover-class="col-hover">
-    <view><image src="/img/index/stamp.svg"></image></view>
+    <navigator url="/pages/goods/favor" hover-class="none"><view><image src="/img/index/stamp.svg"></image></view></navigator>
     <view><text>货品收藏</text></view>
   </view>
 </view>

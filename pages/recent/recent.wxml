@@ -1,9 +1,71 @@
 <!--pages/recent/recent.wxml-->
 
 
-<mp-searchbar style="position:fixed;top:0;left:0;width:100%;" placeholder="请输入关键字搜索" bindselectresult="selectResult" search="{{search}}"></mp-searchbar>
+<mp-searchbar style="position:fixed;top:0;left:0;width:100%;" placeholder="请输入关键字搜索" bindselectresult="selectResult" search="{{search}}" bindcancel="cancelSearch"></mp-searchbar>
 
 <mp-tabbar style="position:fixed;top:48px;width:100%;left:0;right:0;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
 
-<view style="position:fixed;top:86px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
-</view>
+<scroll-view bindscrolltolower="reachEnd" scroll-y style="position:fixed;top:86px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+  <block wx:if="{{list}}">
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="weui-panel">
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_text">
+              <view class="weui-media-box__title weui-media-box__title_in-text">
+                <view class="panel-status">
+                  <block wx:if="{{item.form_confirm == 0 || item.to_confirm == 0}}">
+                  待填写
+                  </block>
+                  <block wx:else="">
+                    <block wx:if="{{item.status == 0}}">
+                    待发货
+                    </block>
+                    <block wx:if="{{item.status == 1}}">
+                    待收货
+                    </block>
+                    <block wx:if="{{item.status == 2}}">
+                    已收货
+                    </block>
+                  </block>
+                </view>
+                <view class="panel-address">
+                  <block wx:if="{{item.type == 0}}">
+                    发往：{{item.to_address}}
+                  </block>
+                  <block wx:else>
+                    来自：{{item.from_address}}
+                  </block>
+                </view>
+              </view>
+              <view class="weui-media-box__desc">
+                <block wx:if="{{item.status > 0}}">
+                  <view>{{item.freight_company}}：{{item.freight_no}}</view>
+                  <view>跟踪</view>
+                  <view>复制</view>
+                </block>
+                <view>
+                  <block wx:if="{{item.content}}">
+                    <view wx:for="{{item.content}}" wx:for-item="itm" wx:for-index="idx">
+                      <block wx:if="{{itm.goods_id == 0}}">{{itm.detail}}</block>
+                      <block wx:else>{{itm.name}}：{{itm.model}}{{itm.detail}}{{itm.unit}}</block>
+                    </view>
+                  </block>
+                </view>
+              </view>
+              <view class="weui-media-box__info">
+                <block wx:if="{{item.form_confirm == 1 || item.to_confirm == 1}}">
+                  <view wx:if="{{item.type == 1 && item.status == 0}}" style="float:right;color:red;">发货</view>
+                  <view wx:if="{{item.type == 0 && item.status == 1}}" style="float:right;color:red;">收货</view>
+                </block>
+
+                <view class="weui-media-box__info__meta">{{item.create_time}}</view>
+                <view class="weui-media-box__info__meta weui-media-box__info__meta_extra">
+                  <navigator url="/pages/freight/item?freight_id={{item.id}}" hover-class="none">详情</navigator>
+                </view>
+              </view>
+            </view>
+          </view>
+      </view>
+    </block>
+  </block>
+</scroll-view>

@@ -1,10 +1,10 @@
-<!--pages/freight/add.wxml-->
+<!--pages/freight/order.wxml-->
 
 <view class="page">
   <view class="page__bd">
     <mp-form id="form" rules="{{rules}}" models="{{formData}}">
       <mp-cells title="货运清单" footer="">
-        <view bindtap="addGoods" class="top-link" style="right:90px;">+ 货品</view>
+        <view bindtap="addGoods" class="top-link" style="right:90px;">+ 收藏</view>
         <view bindtap="addCustomGoods" class="top-link" style="right:0;">+ 自定义</view>
         <view style="min-height:40px;">
           <block wx:if="{{contents}}">
@@ -34,24 +34,24 @@
         </view>
       </mp-cells>
 
-      <mp-cells title="发货地址" footer="">
+      <mp-cells title="收货地址" footer="">
       <view bindtap="selectAddress" class="top-link" style="right:60px;">选择地址</view>
         <view bindtap="clearAddress" class="top-link" style="right:0px;">清空</view>
 
-        <mp-cell show-error prop="freight_from_name" title="发货人" ext-class="">
-          <input bindinput="formInputChange" data-field="freight_from_name" class="weui-input" placeholder="请输入发货人" value="{{address.name}}" disabled="{{address_lock}}"/>
+        <mp-cell show-error prop="freight_to_name" title="收货人" ext-class="">
+          <input bindinput="formInputChange" data-field="freight_to_name" class="weui-input" placeholder="请输入发货人" value="{{address.name}}" disabled="{{address_lock}}"/>
         </mp-cell>
 
-        <mp-cell show-error prop="freight_from_tel" title="联系方式" ext-class="">
-          <input bindinput="formInputChange" data-field="freight_from_tel" class="weui-input" placeholder="请输入联系方式" value="{{address.tel}}" disabled="{{address_lock}}"/>
+        <mp-cell show-error prop="freight_to_tel" title="联系方式" ext-class="">
+          <input bindinput="formInputChange" data-field="freight_to_tel" class="weui-input" placeholder="请输入联系方式" value="{{address.tel}}" disabled="{{address_lock}}"/>
         </mp-cell>
 
-        <mp-cell show-error prop="freight_from_address" title="地址" ext-class="">
-          <input bindinput="formInputChange" data-field="freight_from_address" class="weui-input" placeholder="请输入地址" value="{{address.full}}" disabled="{{address_lock}}"/>
+        <mp-cell show-error prop="freight_to_address" title="地址" ext-class="">
+          <input bindinput="formInputChange" data-field="freight_to_address" class="weui-input" placeholder="请输入地址" value="{{address.full}}" disabled="{{address_lock}}"/>
         </mp-cell>
 
-        <mp-cell show-error prop="freight_from_zipcode" title="邮编" ext-class="">
-          <input bindinput="formInputChange" data-field="freight_from_zipcode" class="weui-input" placeholder="请输入邮编" value="{{address.zipcode}}" disabled="{{address_lock}}"/>
+        <mp-cell show-error prop="freight_to_zipcode" title="邮编" ext-class="">
+          <input bindinput="formInputChange" data-field="freight_to_zipcode" class="weui-input" placeholder="请输入邮编" value="{{address.zipcode}}" disabled="{{address_lock}}"/>
         </mp-cell>
       </mp-cells>
     </mp-form>

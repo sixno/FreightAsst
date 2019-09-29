@@ -108,13 +108,11 @@ Page({
 
             for (var i in list) {
               if(list[i].default == '1') old_index = i;
-              list[i].default = '0';
             }
 
-            // list[index]['default'] = '1';
             var update = {};
             update['list[' + index + '].default'] = '1';
-            if (typeof (old_index !== null)) update['list[' + old_index + '].default'] = '0';
+            if (old_index !== null) update['list[' + old_index + '].default'] = '0';
 
             that.setData(update);
           }

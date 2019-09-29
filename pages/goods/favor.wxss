@@ -1,0 +1,8 @@
+/* pages/goods/favor.wxss */
+
+.weui-cell__icon {
+  margin-right: 16px;
+  vertical-align: middle;
+  width: 32px;
+  height: 32px;
+}

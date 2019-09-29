@@ -1,4 +1,4 @@
-// pages/goods/list.js
+// pages/goods/favor.js
 const app = getApp();
 
 Page({
@@ -10,12 +10,9 @@ Page({
     search_value: '',
     get_list: 0,
     slideButtons: [{
-      text: '编辑',
-      data: 'mod'
-    }, {
       type: 'warn',
-      text: '删除',
-      data: 'del'
+      text: '取消收藏',
+      data: 'unfavor'
     }]
   },
 
@@ -27,7 +24,7 @@ Page({
       search: this.search.bind(this)
     });
 
-    this.getList('-','');
+    this.getList('-', '');
   },
   search: function (value) {
     return new Promise((resolve, reject) => {
@@ -40,46 +37,40 @@ Page({
   selectResult: function (e) {
     console.log('select result', e.detail)
   },
-  searchInput: function(e){
+  searchInput: function (e) {
     // console.log(e);
 
     var search = e.detail.value;
 
-    this.getList('-',search);
+    this.getList('-', search);
   },
   clearSearchInput: function (e) {
     this.getList('-', '');
   },
-  cancelSearch: function (e) {
-    this.getList('-', '');
-  },
-  getList: function(line,search){
+  getList: function (line, search) {
     var that = this;
 
-    if(that.data.get_list) return ;
+    if (that.data.get_list) return;
 
-    that.setData({get_list: 1});
+    that.setData({ get_list: 1 });
 
-    if(typeof(line) == 'undefined') line = '-';
-    if(typeof(search) == 'undefined') search = that.data.search_value;
+    if (typeof (line) == 'undefined') line = '-';
+    if (typeof (search) == 'undefined') search = that.data.search_value;
 
-    that.setData({search_value: search});
+    that.setData({ search_value: search });
 
-    app.api_request('goods/list?line='+line,search ? {search: search} : '',function(res){
+    app.api_request('goods/favor_list?line=' + line, search ? { search: search } : '', function (res) {
       var data = {};
       var list = [];
 
-      if (that.data.list && line != '-')
-      {
+      if (that.data.list && line != '-') {
         var index = that.data.list.length;
 
-        for(var i in res.data)
-        {
-          data['list['+(Number(index) + Number(i))+']'] = res.data[i];
+        for (var i in res.data) {
+          data['list[' + (Number(index) + Number(i)) + ']'] = res.data[i];
         }
       }
-      else
-      {
+      else {
         data.list = res.data;
       }
 
@@ -96,23 +87,16 @@ Page({
     var index = e.target.dataset.index;
 
     switch (action) {
-      case 'mod':
-        app.dat_page = that;
-        wx.navigateTo({ url: '/pages/goods/mod?goods_id=' + goods_id });
-        break;
-
-      case 'del':
+      case 'unfavor':
         wx.showModal({
           title: '提示',
-          content: '确定从列表中删除货品吗？',
+          content: '确定从列表中取消收藏吗？',
           success(res) {
             if (res.confirm) {
-              app.api_request('goods/del', { goods_id: goods_id }, function (res) {
-                var update = {};
-
-                update['list[' + index + '].deleted'] = '1';
-
-                that.setData(update);
+              app.api_request('goods/unfavor', { goods_id: goods_id }, function (res) {
+                if(res.out == 1){
+                  that.setData({ ['list[' + index + '].deleted']: 1});
+                }
               });
             }
           }
@@ -120,30 +104,30 @@ Page({
         break;
     }
   },
-  slideShow: function(e) {
-    this.setData({['list['+e.target.dataset.index+'].slideShow']: 1});
+  slideShow: function (e) {
+    this.setData({ ['list[' + e.target.dataset.index + '].slideShow']: 1 });
   },
-  slideHide: function(e) {
+  slideHide: function (e) {
     var that = this;
 
-    setTimeout(function(){
+    setTimeout(function () {
       that.setData({ ['list[' + e.target.dataset.index + '].slideShow']: 0 });
-    },500)
+    }, 500)
   },
   itemTap: function (e) {
     var data = e.target.dataset;
 
-    if(!this.data.list[data.index].slideShow){
+    if (!this.data.list[data.index].slideShow) {
       wx.navigateTo({
-        url: '/pages/goods/item?goods_id='+data.id,
+        url: '/pages/goods/item?goods_id=' + data.id,
       });
     }
   },
-  reachEnd: function(e) {
+  reachEnd: function (e) {
     // console.log(e);
     var line = this.data.line;
 
-    if(line.indexOf('end') !== -1) return ;
+    if (line.indexOf('end') !== -1) return;
 
     this.getList(line);
   },
@@ -161,7 +145,7 @@ Page({
   onShow: function () {
     var that = this;
 
-    app.refresh_page(function () {
+    app.refresh_page(function(){
       that.getList('-', '');
     });
   },
@@ -190,8 +174,8 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function (e) {
-    
+  onReachBottom: function () {
+
   },
 
   /**

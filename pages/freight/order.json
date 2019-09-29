@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "填写发货单",
+  "navigationBarTitleText": "填写收货单",
   "usingComponents": {
     "mp-cell": "/weui/cell/cell",
     "mp-cells": "/weui/cells/cells",

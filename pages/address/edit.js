@@ -120,6 +120,7 @@ Page({
         data.tel = res.data.tel;
         data.region = [res.data.province,res.data.city,res.data.county];
         data.detail = res.data.detail;
+        data.zipcode = res.data.zipcode;
 
         that.setData(data);
       }

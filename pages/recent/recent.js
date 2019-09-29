@@ -1,4 +1,6 @@
 // pages/recent/recent.js
+const app = getApp();
+
 Page({
 
   /**
@@ -6,6 +8,9 @@ Page({
    */
   data: {
     tab: 0,
+    type: 'all',
+    status: '',
+    api_user_id: app.api_user('id'),
     tabs: [{
       text: "全部"
     },
@@ -21,14 +26,78 @@ Page({
 
     switch (index) {
       case 0:
+        this.setData({ tab: 0, type: 'all', status: '' });
+
+        this.getList('-');
         break;
 
       case 1:
+        this.setData({ tab: 1, type: 'receive', status: '1' });
+
+        this.getList('0');
         break;
-      
+
       case 2:
+        this.setData({ tab: 2, type: 'send', status: '0' });
+
+        this.getList('0');
         break;
     }
+  },
+  cancelSearch: function(){
+    console.log('cancelSearch');
+  },
+  getList: function(line,type,status,search)
+  {
+    var that = this;
+
+    if (that.data.get_list) return;
+
+    that.setData({ get_list: 1 });
+
+    if (typeof (line) == 'undefined') line = '-';
+    if (typeof (type) == 'undefined') type = that.data.type;
+    if (typeof (status) == 'undefined') status = that.data.status;
+    if (typeof (search) == 'undefined') search = that.data.search_value;
+
+    that.setData({ search_value: search });
+
+    app.api_request('freight/list?line=' + line, { type: type, status: status, search: search }, function (res) {
+      var data = {};
+      var list = [];
+
+      if(res.out == 1)
+      {
+        for(var i in res.data)
+        {
+          res.data[i].type = app.api_user('id') != res.data[i].to_user_id ? 0 : 1;
+          res.data[i].create_time = app.date('yyyy-MM-dd hh:mm:ss', res.data[i].create_time);
+        }
+
+        if (that.data.list && line != '-' && line != '0') {
+          var index = that.data.list.length;
+
+          for (var i in res.data) {
+            data['list[' + (Number(index) + Number(i)) + ']'] = res.data[i];
+          }
+        }
+        else {
+          data.list = res.data;
+        }
+      }
+      else
+      {
+        if (line == '-' || line == '0')
+        {
+          data.list = [];
+        }
+      }
+
+      data.line = res.line;
+      data.get_list = 0;
+
+      that.setData(data);
+    });
   },
 
   /**
@@ -49,7 +118,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getList(this.data.tab == 0 ? '-' : '0');
   },
 
   /**

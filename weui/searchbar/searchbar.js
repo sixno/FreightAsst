@@ -166,10 +166,12 @@ Component({
                 searchState: true
             });
         },
-        hideInput: function hideInput() {
+        hideInput: function hideInput(e) {
             this.setData({
                 searchState: false
             });
+
+            this.triggerEvent('cancel',e.detail)
         },
         inputChange: function inputChange(e) {
             var _this = this;

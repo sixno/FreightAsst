@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "货品收藏",
+  "usingComponents": {
+    "mp-searchbar": "/weui/searchbar/searchbar",
+    "mp-slideview": "/weui/slideview/slideview",
+    "mp-cells": "/weui/cells/cells",
+    "mp-cell": "/weui/cell/cell"
+  }
+}

@@ -8,6 +8,7 @@
     "pages/user/login",
     "pages/article/article",
     "pages/goods/list",
+    "pages/goods/favor",
     "pages/goods/item",
     "pages/goods/add",
     "pages/goods/mod",
@@ -17,7 +18,10 @@
     "pages/address/pick",
     "pages/freight/freight",
     "pages/freight/add",
-    "pages/freight/mod"
+    "pages/freight/order",
+    "pages/freight/mod",
+    "pages/freight/item",
+    "pages/freight/trace"
   ],
   "window": {
     "backgroundTextStyle": "light",

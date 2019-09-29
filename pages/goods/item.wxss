@@ -1,1 +1,49 @@
 /* pages/goods/item.wxss */
+
+.size-model {
+  margin-right: 160px;
+}
+
+.size-detail {
+  width: 80px;
+  position: absolute;
+  top: 16px;
+  right: 92px;
+}
+
+.size-detail input {
+  position: absolute;
+  top: 0;
+  left: 28px;
+  width: 24px;
+}
+
+.round-minus,.round-plus {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border: #07C160 solid 1px;
+  border-radius: 50%;
+  color: #07C160;
+  text-align: center;
+  line-height: 20px;
+}
+.round-plus {
+  float: right;
+}
+
+.size-unit {
+  width: 36px;
+  position: absolute;
+  top: 16px;
+  right: 48px;
+}
+
+.buy {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  color: #07C160;
+}

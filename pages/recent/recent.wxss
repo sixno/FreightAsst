@@ -7,3 +7,18 @@
 .top-tabbar .weui-tabbar__label{
   font-size: 16px;
 }
+
+.panel-status {
+  float: right;
+  color: red;
+}
+
+.panel-address {
+  margin-right: 60px;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}

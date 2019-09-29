@@ -2,11 +2,11 @@
 
 <view>
   <view class="square" hover-class="square-hover">
-    <navigator url="/pages/freight/add?user=from" hover-class="none"><view class="avatar"><image src="/img/freight/upload.svg"></image></view></navigator>
+    <navigator url="/pages/freight/add" hover-class="none"><view class="avatar"><image src="/img/freight/upload.svg"></image></view></navigator>
     <view>我是发货人</view>
   </view>
   <view class="square" hover-class="square-hover">
-    <navigator url="/pages/freight/add?user=to" hover-class="none"><view class="avatar"><image src="/img/freight/download.svg"></image></view></navigator>
+    <navigator url="/pages/freight/order" hover-class="none"><view class="avatar"><image src="/img/freight/download.svg"></image></view></navigator>
     <view>我是收货人</view>
   </view>
 </view>
