@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "货运单详情",
+  "usingComponents": {
+    "mp-cell": "/weui/cell/cell",
+    "mp-cells": "/weui/cells/cells"
+  }
 }

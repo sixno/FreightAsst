@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "选择地址",
+  "usingComponents": {
+    "mp-cell": "/weui/cell/cell",
+    "mp-cells": "/weui/cells/cells"
+  }
 }

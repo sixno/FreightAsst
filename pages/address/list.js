@@ -77,7 +77,7 @@ Page({
 
     if(index == 0)
     {
-      app.api_request('address/list?line=0', { user_id: wx.getStorageSync('api_user_id') }, function (res) {
+      app.api_request('address/list?line=0', { user_id: app.api_user('id') }, function (res) {
         that.setData({
           tab: 0,
           list: res.data

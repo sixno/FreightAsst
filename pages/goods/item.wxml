@@ -36,6 +36,10 @@
           </mp-cells>
         </view>
       </view>
+
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" open-type="share">发送给好友</button>
+      </view>
     </view>
   </view>
 </view>

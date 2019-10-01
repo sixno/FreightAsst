@@ -13,22 +13,21 @@
                 <view class="weui-cell__hd" style="margin-right:52px;">
                   <input bindinput="formInputChange" data-field="freight_content_detail_{{index}}" class="weui-input" placeholder="货物详情" value="{{item.detail}}"/>
                 </view>
+                <view bindtap="removeGoods" data-index="{{index}}" class="goods-remove">-</view>
               </block>
               <block wx:else>
-                <view class="weui-cell__hd">
-                  {{item.name}}
-                </view>
-                <view class="weui-cell__hd">
-                  {{item.model}}
-                </view>
-                <view class="weui-cell__hd" class="size-unit">
-                  <input bindinput="formInputChange" data-field="goods_content_detail_{{index}}" class="weui-input" placeholder="数量" value="{{item.detail}}"/>
-                </view>
-                <view class="weui-cell__hd">
-                  {{item.unit}}
+                <view style="margin-right:48px;margin-bottom:5px;">{{item.name}}</view>
+                <view style="position:relative;">
+                  <view class="weui-cell__bd size-model">{{item.model}}</view>
+                  <view class="weui-cell__hd size-detail">
+                    <view class="round-minus" bindtap="detailMinus" data-index="{{index}}" data-value="{{item.detail || 0}}">-</view>
+                    <input class="weui-input"  bindinput="detailChange" data-index="{{index}}" data-value="{{item.detail || 0}}" value="{{item.detail || 0}}"/>
+                    <view class="round-plus" bindtap="detailPlus" data-index="{{index}}" data-value="{{item.detail || 0}}">+</view>
+                  </view>
+                  <view class="weui-cell__hd size-unit">{{item.unit}}</view>
+                  <view bindtap="removeGoods" data-index="{{index}}" class="goods-remove" style="top:2px;right:0;">-</view>
                 </view>
               </block>
-              <view bindtap="removeGoods" data-index="{{index}}" class="goods-remove">-</view>
             </mp-cell>
           </block>
         </view>

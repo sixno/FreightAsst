@@ -22,6 +22,58 @@ Page({
     address: {},
     address_lock: false
   },
+  detailMinus: function (e) {
+    var that = this;
+    var index = Number(e.target.dataset.index);
+    var value = Number(e.target.dataset.value);
+    var contents = that.data.contents;
+
+    if (typeof (contents[index]) !== 'undefined') {
+      if (value > 0){
+        var update = {['contents['+index+'].detail']: value - 1};
+
+        update['formData.freight_content_detail_' + index] = value - 1;
+
+        that.setData(update);
+      }
+    }
+  },
+  detailPlus: function (e) {
+    var that = this;
+    var index = Number(e.target.dataset.index);
+    var value = Number(e.target.dataset.value);
+    var contents = that.data.contents;
+
+    if (typeof (contents[index]) !== 'undefined') {
+      var update = { ['contents[' + index + '].detail']: value + 1 };
+
+      update['formData.freight_content_detail_' + index] = value + 1;
+
+      that.setData(update);
+    }
+  },
+  detailChange: function (e) {
+    var that = this;
+    var index = Number(e.target.dataset.index);
+    var value = Number(e.detail.value);
+    var contents = that.data.contents;
+
+    if (value < 0) value = 0;
+
+    if (typeof (contents[index]) !== 'undefined') {
+      var update = { ['contents[' + index + '].detail']: value };
+      update['formData.freight_content_detail_' + index] = value;
+
+      that.setData(update);
+    }
+  },
+  addGoods: function(){
+    app.dat_page = this;
+
+    wx.navigateTo({
+      url: '/pages/goods/pick?favor=0'
+    });
+  },
   addCustomGoods: function(){
     var that = this;
     var index = that.data.contents.length;
@@ -52,6 +104,13 @@ Page({
     contents.splice(index, 1);
 
     this.setData({ formData: formData, contents: contents });
+  },
+  selectAddress: function (e){
+    app.dat_page = this;
+
+    wx.navigateTo({
+      url: '/pages/address/pick?type=send'
+    });
   },
   clearAddress: function (e){
     var that = this;

@@ -1,2 +1,10 @@
 <!--pages/address/pick.wxml-->
-<text>pages/address/pick.wxml</text>
+
+<mp-cells>
+  <block wx:for="{{list}}" wx:key="id">
+    <mp-cell>
+      <view style="color:#07C160;position:absolute;right:16px;" bindtap="selectAddress" data-index="{{index}}">选择</view>
+      <view class="weui-cell__bd" style="margin-right:50px;">{{item.full}}</view>
+    </mp-cell>
+  </block>
+</mp-cells>

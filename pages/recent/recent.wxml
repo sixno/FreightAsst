@@ -13,7 +13,7 @@
           <view class="weui-media-box weui-media-box_text">
               <view class="weui-media-box__title weui-media-box__title_in-text">
                 <view class="panel-status">
-                  <block wx:if="{{item.form_confirm == 0 || item.to_confirm == 0}}">
+                  <block wx:if="{{item.from_confirm == 0 || item.to_confirm == 0}}">
                   待填写
                   </block>
                   <block wx:else="">
@@ -53,7 +53,7 @@
                 </view>
               </view>
               <view class="weui-media-box__info">
-                <block wx:if="{{item.form_confirm == 1 || item.to_confirm == 1}}">
+                <block wx:if="{{item.from_confirm == 1 && item.to_confirm == 1}}">
                   <view wx:if="{{item.type == 1 && item.status == 0}}" style="float:right;color:red;">发货</view>
                   <view wx:if="{{item.type == 0 && item.status == 1}}" style="float:right;color:red;">收货</view>
                 </block>

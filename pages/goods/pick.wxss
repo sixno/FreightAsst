@@ -1,1 +1,64 @@
 /* pages/goods/pick.wxss */
+
+.sizes-cell {
+  position: relative;
+}
+
+.sizes-cell:before {
+  content:" ";
+  position:absolute;
+  left:16px;
+  top:0;
+  right:0;
+  height:1px;
+  border-top:1rpx solid rgba(0,0,0,.1);
+  color:rgba(0,0,0,.1);
+}
+
+.size-model {
+  margin-right: 176px;
+}
+
+.size-detail {
+  width: 80px;
+  position: absolute;
+  top: 16px;
+  right: 108px;
+}
+
+.size-detail input {
+  position: absolute;
+  top: 0;
+  left: 28px;
+  width: 24px;
+}
+
+.round-minus,.round-plus {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border: #07C160 solid 1px;
+  border-radius: 50%;
+  color: #07C160;
+  text-align: center;
+  line-height: 20px;
+}
+.round-plus {
+  float: right;
+}
+
+.size-unit {
+  width: 36px;
+  position: absolute;
+  top: 16px;
+  right: 64px;
+}
+
+.buy {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #07C160;
+}

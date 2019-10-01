@@ -1,2 +1,98 @@
 <!--pages/freight/item.wxml-->
-<text>pages/freight/item.wxml</text>
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-article">
+      <block wx:if="{{type == 0}}">
+        <view class="weui-article__h1" style="float:left;">发往：</view>
+        <view style="margin-left:40px;">{{to_address || '未填写'}}</view>
+      </block>
+      <block wx:else>
+        <view class="weui-article__h1" style="float:left;">来自：</view>
+        <view style="margin-left:40px;">{{from_address || '未填写'}}</view>
+      </block>
+
+      <view style="clear:both;"></view>
+
+      <block wx:if="{{status > 0}}">
+        <view>{{freight_company}}：{{freight_no}}</view>
+        <view>跟踪</view>
+        <view>复制</view>
+      </block>
+
+      <view class="weui-article__section">
+        <view class="weui-article__h2">货运清单</view>
+        <view class="weui-article__section">
+          <mp-cells>
+            <block wx:for="{{content}}" wx:key="id">
+              <mp-cell wx:if="{{item.goods_id != 0}}">
+                <view class="weui-cell__hd">
+                  <view class="weui-cell__bd" style="width:120px;float:left;">{{item.name}}</view>
+                  <view style="margin-left:130px;">{{item.model}}{{item.detail}}{{item.unit}}</view>
+                </view>
+              </mp-cell>
+              <mp-cell wx:else>
+                <view class="weui-cell__hd">{{item.detail}}</view>
+              </mp-cell>
+            </block>
+          </mp-cells>
+        </view>
+      </view>
+
+      <block wx:if="{{from_confirm == 1}}">
+        <view class="weui-article__section">
+          <view class="weui-article__h2">发货地址</view>
+          <view class="weui-article__section"></view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="weui-article__section" wx:if="{{type == 0}}">
+          <view class="weui-article__h2">发货地址</view>
+          <view class="weui-article__section">确定</view>
+        </view>
+      </block>
+
+      <block wx:if="{{to_confirm == 1}}">
+        <view class="weui-article__section">
+          <view class="weui-article__h2">收货地址</view>
+          <view class="weui-article__section"></view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="weui-article__section" wx:if="{{type == 1}}">
+          <view class="weui-article__h2">收货地址</view>
+          <view class="weui-article__section">确定</view>
+        </view>
+      </block>
+
+      <block wx:if="{{from_confirm == 0 || to_confirm == 0}}">
+        <block wx:if="{{type == 0 && to_confirm == 0}}">
+          <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" open-type="share">发送给收货人</button>
+          </view>
+        </block>
+
+        <block wx:if="{{type == 1 && from_confirm == 0}}">
+          <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" open-type="share">发送给发货人</button>
+          </view>
+        </block>
+      </block>
+      <block wx:else>
+        <block wx:if="{{type == 0 && status == 0}}">
+        发货
+        </block>
+
+        <block wx:if="{{type == 1 && status == 1}}">
+        收货
+        </block>
+      </block>
+
+    </view>
+  </view>
+</view>
+
+
+
+
+
