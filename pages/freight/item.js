@@ -20,16 +20,8 @@ Page({
 
     app.api_request('freight/item', options, function (res) {
       if (res.out == 1) {
-        if(res.data.to_user_id != 0){
-          res.data.type = app.api_user('id') != res.data.to_user_id ? 0 : 1;
-        }
-        else
-        {
-          res.data.type = app.api_user('id') == res.data.from_user_id ? 0 : 1;
-        }
-
         wx.setNavigationBarTitle({
-          title: res.data.type == 0 ? '发货单详情' : '收货单详情'
+          title: res.data.type == 1 ? '收货单详情' : '发货单详情'
         });
 
         that.setData(res.data);

@@ -2,55 +2,22 @@
 
 App({
   onLaunch: function () {
+    this.api_login();
   },
-  api_session: function (res) {
+  api_token: '',
+  api_session: function (res, callback) {
     var that = this;
-    var set_cookies = null;
-
-    if(res.header) set_cookies = res.header['Set-Cookie'];
-
-    if (set_cookies) {
-      var tmp_cookies = set_cookies.split('/,');
-
-      var cookies = wx.getStorageSync('cookies');
-
-      if(!cookies) cookies = {};
-
-      for (var i in tmp_cookies) {
-        var cookie = tmp_cookies[i];
-        var pos = cookie.indexOf(';');
-
-        if (pos != -1) cookie = cookie.substr(0,pos);
-
-        var cookie_arr = cookie.split('=');
-
-        if(cookie_arr[1] != 'deleted' && cookie_arr[1] !== '')
-        {
-          cookies[cookie_arr[0]] = cookie_arr[1];
-        }
-        else
-        {
-          delete(cookies[cookie_arr[0]]);
-        }
-      }
-
-      wx.setStorageSync('cookies', cookies);
-    }
 
     if(typeof (res.data) == 'string') res.data = JSON.parse(res.data);
 
     if (res.data.code == '1000')
     {
-      wx.removeStorageSync('cookies');
+      this.api_login(callback);
+    }
 
-      // 静默登录好像有点问题啊，只能显式登录了。。。
-      // wx.login({
-      //   success: function (res) {
-      //     if (res.code) that.api_request('user/wx_login', { code: res.code });
-      //   }
-      // });
-
-      wx.navigateTo({ url: "/pages/user/login" });
+    if(res.data.code == '0001')
+    {
+      that.api_token = res.data.data.asst_id;
     }
   },
   api_request: function (url, arg, success, failure, complete) {
@@ -60,42 +27,20 @@ App({
 
     var cookies = wx.getStorageSync('cookies');
 
-    args.header = { 'content-type': 'application/json; charset=utf-8' };
-
-    if(cookies)
-    {
-      var cookie = '';
-
-      for (var i in cookies)
-      {
-        if(cookie != '')
-        {
-          cookie = cookie + '; ' + i + '=' + cookies[i];
-        }
-        else
-        {
-          cookie = i + '=' + cookies[i];
-        }
-      }
-
-      args.header['cookie'] = cookie;
-    }
+    args.header = { 'content-type': 'application/json; charset=utf-8','x-token': that.api_token };
 
     args.url = api_base + url;
     args.method = 'POST';
 
     if (arg) args.data = arg;
 
-    if (success) {
-      args.success = function (res) {
-        that.api_session(res);
+    args.success = function (res) {
+      that.api_session(res,function(){
+        that.api_request(url,arg,success,failure,complete);
+      });
 
-        success(res.data);
-      };
-    }
-    else {
-      args.success = that.api_session;
-    }
+      if(success) success(res.data);
+    };
 
     if (failure) args.fail = failure;
     if (complete) args.complete = complete;
@@ -110,35 +55,26 @@ App({
 
     var cookies = wx.getStorageSync('cookies');
 
-    args.header = {};
-
-    if (cookies) {
-      var cookie = '';
-
-      for (var i in cookies) {
-        if (cookie != '') {
-          cookie = cookie + '; ' + i + '=' + cookies[i];
-        }
-        else {
-          cookie = i + '=' + cookies[i];
-        }
-      }
-
-      args.header['cookie'] = cookie;
-    }
+    args.header = { 'x-token': that.api_token };
 
     args.filePath = file;
     args.name = 'file';
 
     if (success) {
       args.success = function (res) {
-        that.api_session(res);
+        that.api_session(res,function(){
+          that.api_upload(step,file,success,failure,complete);
+        });
 
         success(typeof(res.data) == 'string' ? JSON.parse(res.data) : res.data);
       };
     }
     else {
-      args.success = that.api_session;
+      args.success = function(res){
+        that.api_session(res,function(){
+          that.api_upload(step,file,success,failure,complete);
+        });
+      };
     }
 
     if (failure) args.fail = failure;
@@ -146,37 +82,101 @@ App({
 
     wx.uploadFile(args);
   },
+  api_login: function(callback)
+  {
+    var that = this;
+
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          that.api_request('user/wx_login', { code: res.code }, function (res) {
+            if (res.out == 1) {
+              wx.setStorageSync('api_user', res.data);
+
+              if(callback) callback(res.data);
+            }
+            else {
+              wx.showToast({
+                title: '小程序静默登录失败',
+                icon: 'none'
+              });
+
+              wx.navigateTo({
+                url: '/pages/user/login'
+              });
+            }
+          });
+        }
+      },
+      fail: function (res) {
+        console.log('获取临时code失败！' + res.errMsg)
+      }
+    });
+  },
   api_user: function(key){
+    var that = this;
     var api_user = wx.getStorageSync('api_user');
 
-    if(!api_user){
-      this.check_login();
-
-      api_user = wx.getStorageSync('api_user');
-    }
+    if(!api_user) api_user = {};
 
     if(!key) return api_user;
 
     return api_user[key];
   },
   check_login: function () {
+    var that = this;
+
     this.api_request('user/current','',function(res){
       if(res.out == 1)
       {
         wx.setStorageSync('api_user',res.data);
 
-        if (!wx.getStorageSync('userInfo')) {
-          wx.navigateTo({ url: "/pages/user/login" });
-        }
-        else {
-          wx.checkSession({
-            fail: function () {
+        wx.getSetting({
+          success: function (res) {
+            if (res.authSetting['scope.userInfo'])
+            {
+              wx.getUserInfo({
+                success: function(res){
+                  var userInfo = wx.getStorageSync('userInfo');
+
+                  if(userInfo)
+                  {
+                    if(userInfo.nickNmae != res.userInfo.nickNmae || userInfo.avatarUrl != res.userInfo.avatarUrl || userInfo.gender != res.userInfo.gender)
+                    {
+                      wx.setStorageSync('userInfo', res.userInfo);
+
+                      that.sync_userInfo();
+                    }
+                  }
+                  else
+                  {
+                    wx.setStorageSync('userInfo',res.userInfo);
+
+                    that.sync_userInfo();
+                  }
+                }
+              });
+            }
+            else
+            {
               wx.navigateTo({ url: "/pages/user/login" });
             }
-          });
-        }
+          },
+          fail: function() {
+            wx.navigateTo({ url: "/pages/user/login" });
+          }
+        });
       }
     });
+  },
+  sync_userInfo: function(callback){
+    var that = this;
+    var userInfo = wx.getStorageSync('userInfo');
+
+    if(userInfo)
+    {
+      that.api_request('user/wx_update', userInfo, callback);
+    }
   },
   freight_trace: function(freight_no,callback){
     

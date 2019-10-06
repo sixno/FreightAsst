@@ -79,33 +79,32 @@ Page({
     this.checkSessionAndLogin();
   },
   checkSessionAndLogin: function () {
-    let that = this;
-    let cookies = wx.getStorageSync('cookies');
+    var that = this;
 
-    if (cookies) {
+    if (app.api_token) {
       wx.checkSession({
         success: function () {
-          //session_key 未过期，并且在本生命周期一直有效
           wx.navigateBack({});
         },
         fail: function () {
-          // session_key 已经失效，需要重新执行登录流程
-          wx.removeStorageSync('cookies');
           that.checkSessionAndLogin();
         }
-      })
+      });
     } else {
       that.login();
     }
   },
   login: function () {
-    let that = this;
+    var that = this;
     wx.login({
       success: function (res) {
         if (res.code) {
           app.api_request('user/wx_login', { code: res.code }, function (res) {
             if (res.out == 1) {
+              app.api_token = res.data.asst_id;
+
               wx.setStorageSync('api_user', res.data);
+
               that.sendUserInfoToServer();
             }
             else {
@@ -120,15 +119,12 @@ Page({
     });
   },
   sendUserInfoToServer: function () {
-    let userInfo = wx.getStorageSync('userInfo');
-
-    app.api_request('user/wx_update', userInfo, function (res) {
+    app.sync_userInfo(function (res) {
       if (res.out == 1) {
         wx.setStorageSync('api_user', res.data);
-        wx.navigateBack({});
+        wx.navigateBack();
       }
       else {
-
         wx.showModal({
           title: 'Sorry',
           content: '同步信息出错~'

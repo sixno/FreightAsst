@@ -70,7 +70,6 @@ Page({
       {
         for(var i in res.data)
         {
-          res.data[i].type = app.api_user('id') != res.data[i].to_user_id ? 0 : 1;
           res.data[i].create_time = app.date('yyyy-MM-dd hh:mm:ss', res.data[i].create_time);
         }
 

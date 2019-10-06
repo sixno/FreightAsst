@@ -10,21 +10,26 @@ Page({
   getUser: function () {
     var that = this;
 
-    this.setData({
-      userInfo: wx.getStorageSync('userInfo'),
-      api_user: app.api_user()
-    });
+    if(app.api_user('id'))
+    {
+      that.setData({ api_user: app.api_user() });
+    }
+    else
+    {
+      app.api_request('user/current','',function(res){
+        if(res.out == 1)
+        {
+          that.setData({api_user: res.data});
+        }
+      });
+    }
   },
   getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo
     });
   },
   onLoad: function () {
-    app.check_login();
-
     this.getUser();
   },
   onShow: function () {

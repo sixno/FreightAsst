@@ -12,7 +12,7 @@ Page({
   getList: function(){
     var that = this;
 
-    app.api_request('address/list?line=0', { user_id: app.api_user('id') }, function (res) {
+    app.api_request('address/list?line=0', '', function (res) {
       that.setData({ list: res.data });
     });
   },

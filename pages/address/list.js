@@ -68,8 +68,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.check_login();
-
     this.getList(0);
   },
   getList: function(index){
@@ -77,7 +75,7 @@ Page({
 
     if(index == 0)
     {
-      app.api_request('address/list?line=0', { user_id: app.api_user('id') }, function (res) {
+      app.api_request('address/list?line=0', '', function (res) {
         that.setData({
           tab: 0,
           list: res.data
@@ -206,7 +204,7 @@ Page({
     var that = this;
 
     wx.chooseAddress({
-      success(res) {
+      success: function(res) {
         var data = {};
 
         data.name = res.userName;
@@ -223,6 +221,32 @@ Page({
           update['list['+ that.data.list.length +']'] = res.data;
 
           that.setData(update);
+        });
+      },
+      fail: function(err){
+        wx.getSetting({
+          success: function(res){
+            if(res.authSetting['scope.address'] !=  undefined  && res.authSetting['scope.address']  !=  true)
+            {
+              wx.showModal({
+                title:  '是否授权访问通讯地址',
+                content:'需要访问您的通讯地址，请确认授权，否则无法新增地址',
+                success:  function (res)  {
+                  console.log(res);
+
+                  if  (res.confirm)  {
+                    wx.openSetting({
+                      success: function(dataAu){
+                        if (dataAu.authSetting['scope.address'] == true) {
+                          that.addAddress();
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+            }
+          }
         });
       }
     });

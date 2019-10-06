@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    formData: { freight_to_user_id: app.api_user('id') },
+    formData: { freight_to_confirm: 1 },
     rules: [{
       name: 'freight_to_name',
       rules: [{ required: true, message: '收货人必填' }],
@@ -241,7 +241,23 @@ Page({
     {
       var goods = JSON.parse(decodeURIComponent(options.goods));
 
-      console.log(goods);
+      var update = {
+        ['contents[0]']: {
+          goods_id: goods.goods_id,
+          name: goods.name,
+          model: goods.model,
+          unit: goods.unit,
+          detail: goods.detail
+        }
+      };
+
+      update['formData.freight_content_goods_id_0'] = goods.goods_id;
+      update['formData.freight_content_name_0'] = goods.name;
+      update['formData.freight_content_model_0'] = goods.model;
+      update['formData.freight_content_unit_0'] = goods.unit;
+      update['formData.freight_content_detail_0'] = goods.detail;
+
+      that.setData(update);
     }
   },
 

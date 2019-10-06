@@ -52,7 +52,8 @@
   width: 46px;
   height: 46px;
   margin: 2px;
-  border-radius: 200px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .top-nickname {

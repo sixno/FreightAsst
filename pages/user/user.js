@@ -58,12 +58,14 @@ Page({
   onShow: function () {
     var that = this;
 
+    app.check_login();
+
     app.refresh_page(function () {
       that.getUser();
     });
   },
   onTabItemTap(item) {
-    console.log(item);
+    // console.log(item);
   },
 
   /**

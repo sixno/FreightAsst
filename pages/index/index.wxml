@@ -1,16 +1,5 @@
 <!--index.wxml-->
 
-<view class="top-welcome">
-  <block wx:if="{{!userInfo}}">
-    <image class="top-avatar" src="../../img/logo.png" mode="cover"></image>
-    <text class="top-nickname">未登录</text>
-  </block>
-  <block wx:else>
-    <image class="top-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-    <text class="top-nickname">{{userInfo.nickName}} <text wx:if="{{api_user.vip > 0}}" style="color:red">VIP {{api_user.vip}}</text><text wx:else>VIP 0</text></text>
-  </block>
-</view>
-
 <view class="row">
   <view class="col" hover-class="col-hover">
     <navigator url="/pages/goods/list" hover-class="none"><view><image src="/img/index/goods.svg"></image></view></navigator>

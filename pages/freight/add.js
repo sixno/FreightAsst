@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    formData: {freight_from_user_id: app.api_user('id')},
+    formData: {freight_from_confirm: 1},
     rules: [{
       name: 'freight_from_name',
       rules: [{ required: true, message: '发货人必填' }],
