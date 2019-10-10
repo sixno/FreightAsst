@@ -19,7 +19,6 @@
     "pages/freight/freight",
     "pages/freight/add",
     "pages/freight/order",
-    "pages/freight/mod",
     "pages/freight/item",
     "pages/freight/send",
     "pages/freight/trace"

@@ -63,13 +63,6 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   bindGetUserInfo: function (e) {
     // 获得最新的用户信息
     if (!e.detail.userInfo) {

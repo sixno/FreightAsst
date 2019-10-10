@@ -7,15 +7,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: wx.getStorageSync('userInfo'),
-    vip: 0,
-    vip_end_time: 0,
+    dialogShow: false,
+    buttons: [{ text: '取消' }, { text: '确定' }],
     tab: 0,
     tabs: [{
       text: "协助发货"
     },
     {
       text: "数据共享"
+    }],
+    slideButtons: [{
+      type: 'warn',
+      text: '取消共享',
+      data: 'remove'
     }]
   },
   tabChange(e) {
@@ -23,19 +27,73 @@ Page({
 
     switch (index) {
       case 0:
+        this.setData({ tab: 0 });
         break;
 
       case 1:
+        this.setData({ tab: 1 });
         break;
     }
   },
   getUser: function () {
     var that = this;
 
-    this.setData({
-      userInfo: wx.getStorageSync('userInfo'),
-      api_user: app.api_user()
+    app.api_request('user/current','',function(res){
+      that.setData({api_user: res.data});
     });
+  },
+  getList: function(){},
+  copyCode: function(e)
+  {
+    var code = e.currentTarget.dataset.code;
+
+    wx.setClipboardData({
+      data: code,
+      success: function (res) {
+        wx.showToast({
+          title: '协助码复制成功'
+        });
+      }
+    });
+  },
+  slideButtonTap: function (e) {
+    var that = this;
+    var action = e.detail.data;
+    var user_id = e.target.dataset.id;
+    var index = e.target.dataset.index;
+
+    switch (action) {
+      case 'remove':
+        wx.showModal({
+          title: '提示',
+          content: '确定取消共享发货数据给该用户吗？',
+          success(res) {
+            if (res.confirm) {
+              app.api_request('freight/unshare', { user_id: user_id }, function (res) {
+                var update = {};
+
+                update['list[' + index + '].deleted'] = '1';
+
+                that.setData(update);
+              });
+            }
+          }
+        });
+        break;
+    }
+  },
+  showDialog: function()
+  {
+    this.setData({
+      dialogShow: true
+    });
+  },
+  tapDialogButton(e) {
+    console.log('dialog', e.detail)
+    this.setData({
+      dialogShow: false,
+      showOneButtonDialog: false
+    })
   },
 
   /**

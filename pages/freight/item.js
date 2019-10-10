@@ -47,6 +47,20 @@ Page({
           app.api_request('freight/mod', { freight_id: freight_id, payment: 1 }, function (res) {
             if (res.out == 1) {
               that.setData({ payment: 1 });
+
+              var cps = getCurrentPages();
+
+              for (var i in cps)
+              {
+                if(cps[i].route == 'pages/recent/recent')
+                {
+                  for (var j in cps[i].data.list) {
+                    if (cps[i].data.list[j].id == freight_id) {
+                      cps[i].setData({ ['list[' + j + ']']: res.data });
+                    }
+                  }
+                }
+              }
             }
           });
         }
@@ -66,6 +80,18 @@ Page({
           app.api_request('freight/mod', { freight_id: freight_id, status: 2 }, function (res) {
             if (res.out == 1) {
               that.setData({ status: 2 });
+
+              var cps = getCurrentPages();
+
+              for (var i in cps) {
+                if (cps[i].route == 'pages/recent/recent') {
+                  for (var j in cps[i].data.list) {
+                    if (cps[i].data.list[j].id == freight_id) {
+                      cps[i].setData({ ['list[' + j + ']']: res.data });
+                    }
+                  }
+                }
+              }
             }
           });
         }
@@ -282,6 +308,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return app.share_options();
   }
 })

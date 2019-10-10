@@ -1,7 +1,13 @@
 //app.js
 
 App({
-  onLaunch: function () {
+  inviter: 0,
+  onLaunch: function (options) {
+    if (options.query.inviter)
+    {
+      this.inviter = options.query.inviter;
+    }
+
     this.api_login();
   },
   api_token: '',
@@ -89,7 +95,7 @@ App({
     wx.login({
       success: function (res) {
         if (res.code) {
-          that.api_request('user/wx_login', { code: res.code }, function (res) {
+          that.api_request('user/wx_login', { code: res.code, inviter: that.inviter }, function (res) {
             if (res.out == 1) {
               wx.setStorageSync('api_user', res.data);
 
@@ -210,6 +216,27 @@ App({
     }
 
     return format;
+  },
+  share_options: function()
+  {
+    var cps = getCurrentPages();
+    var cp = cps[cps.length - 1];
+    var options = cp.options || {};
+
+    options.inviter = this.api_user('id');
+
+    var query = '?';
+
+    for(var i in options)
+    {
+      query += i + '=' + options[i] + '&';
+    }
+
+    query = query.substr(0,query.length - 1);
+
+    var path = '/' + cp.route + query;
+
+    return {path: path};
   },
   dat_page: null,
   refresh_show: false,

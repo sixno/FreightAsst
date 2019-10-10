@@ -10,7 +10,7 @@ Page({
     tab: 0,
     type: 'all',
     status: '',
-    api_user_id: app.api_user('id'),
+    search_value: '',
     tabs: [{
       text: "全部"
     },

@@ -179,7 +179,7 @@
 
         <block wx:if="{{type == 2 && status == 0 && payment == 1}}">
           <view class="weui-btn-area-padding2">
-            <navigator url="/pages/freight/send?freight_id={{id}}&from=item"><button class="weui-btn" type="primary">发货</button></navigator>
+            <navigator url="/pages/freight/send?freight_id={{id}}"><button class="weui-btn" type="primary">发货</button></navigator>
           </view>
         </block>
 

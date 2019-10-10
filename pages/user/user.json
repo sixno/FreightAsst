@@ -1,6 +1,10 @@
 {
   "navigationBarTitleText": "",
   "usingComponents": {
-    "mp-tabbar": "/weui/tabbar/tabbar"
+    "mp-tabbar": "/weui/tabbar/tabbar",
+    "mp-slideview": "/weui/slideview/slideview",
+    "mp-cells": "/weui/cells/cells",
+    "mp-cell": "/weui/cell/cell",
+    "mp-dialog": "/weui/dialog/dialog"
   }
 }

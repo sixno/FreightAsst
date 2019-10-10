@@ -8,11 +8,10 @@ Page({
    */
   data: {
     formData: {freight_status: 1},
-    rules: [{
-      name: 'freight_freight_no',
-      rules: [{ required: true, message: '运单号必填' }],
-    }],
-    company_lock: true
+    rules: [],
+    express_index: 0,
+    company_lock: true,
+    buttonText: '确定发货'
   },
   scanFN: function () {
     var that = this;
@@ -55,6 +54,8 @@ Page({
       }
 
       that.setData(update);
+
+      wx.setStorageSync('express_index', index);
     }
   },
   formInputChange: function (e) {
@@ -67,13 +68,6 @@ Page({
   },
   submitForm: function () {
     var that = this;
-    var cps = getCurrentPages();
-    var cp = null;
-
-    if(cps.length > 1)
-    {
-      cp = cps[cps.length - 2];
-    }
 
     this.selectComponent('#form').validate((valid, errors) => {
       // console.log(that.data.formData);
@@ -93,24 +87,41 @@ Page({
           data[(i != 'freight_id' ? i.substr(8) : i)] = that.data.formData[i];
         }
 
+        if(!data.freight_no)
+        {
+          wx.showToast({
+            title: '运单号不能为空',
+            icon: 'none'
+          });
+
+          return ;
+        }
+
+        if (!data.freight_company) {
+          wx.showToast({
+            title: '快递公司不能为空',
+            icon: 'none'
+          });
+
+          return;
+        }
+
         app.api_request('freight/mod', data, function (res) {
           if (res.out == 1) {
-            if(that.data.from == 'list' && cp)
-            {
-              if(cp.data.list)
-              {
-                for(var i in cp.data.list)
-                {
-                  if(cp.data.list[i].id == res.data.id)
-                  {
-                    cp.setData({['list['+i+']']: res.data});
+            var cps = getCurrentPages();
+
+            for (var i in cps) {
+              if (cps[i].route == 'pages/recent/recent') {
+                for (var j in cps[i].data.list) {
+                  if (cps[i].data.list[j].id == data.freight_id) {
+                    cps[i].setData({ ['list[' + j + ']']: res.data });
                   }
                 }
               }
-            }
 
-            if (that.data.from == 'item' && cp) {
-              cp.setData(res.data);
+              if (cps[i].route == 'pages/freight/item') {
+                cps[i].setData(res.data);
+              }
             }
 
             wx.navigateBack();
@@ -135,6 +146,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    var express_index = wx.getStorageSync('express_index') || 0;
 
     that.setData({from: options.from});
 
@@ -143,12 +155,62 @@ Page({
       that.setData({['formData.freight_id']: options.freight_id});
     }
 
+    if(options.freight_no)
+    {
+      wx.setNavigationBarTitle({
+        title: '修改运单'
+      });
+
+      var ini = {};
+      ini.freight_no = options.freight_no;
+      ini.freight_company = options.freight_company;
+      ini.buttonText = '确定修改';
+      
+      ini['formData.freight_freight_no'] = options.freight_no;
+      ini['formData.freight_freight_cd'] = options.freight_cd;
+      ini['formData.freight_freight_company'] = options.freight_company;
+
+      that.setData(ini);
+    }
+
     app.api_request('freight/cd_list','',function(res){
       if(res.out == 1)
       {
+        var update = {};
+
         res.data.unshift({code:'',name:'手工填写'});
 
-        that.setData({express_list: res.data});
+        update.express_list = res.data;
+
+        if (options.freight_cd === undefined)
+        {
+          if(express_index != 0 && res.data[express_index])
+          {
+            update.express_index = express_index;
+
+            update.company_lock = true;
+            update.freight_company = res.data[express_index].name;
+            update['formData.freight_freight_cd'] = res.data[express_index].code;
+            update['formData.freight_freight_company'] = res.data[express_index].name;
+          }
+        }
+        else if (options.freight_cd)
+        {
+          for(var i in res.data)
+          {
+            if (res.data[i].code == options.freight_cd)
+            {
+              update.express_index = i;
+
+              update.company_lock = true;
+              update.freight_company = res.data[i].name;
+              update['formData.freight_freight_cd'] = res.data[i].code;
+              update['formData.freight_freight_company'] = res.data[i].name;
+            }
+          }
+        }
+
+        that.setData(update);
       }
     });
   },
@@ -192,13 +254,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

@@ -66,7 +66,8 @@
                     <text bindtap="delFreight" data-id="{{item.id}}" data-index="{{index}}" style="margin-right:8px;">删除</text>
                     <text bindtap="paymentOK" data-id="{{item.id}}" data-index="{{index}}">确认收款</text>
                   </view>
-                  <view wx:if="{{item.type == 2 && item.status == 0 && item.payment == 1}}" style="float:right;color:red;"><navigator url="/pages/freight/send?freight_id={{item.id}}&from=list">发货</navigator></view>
+                  <view wx:if="{{item.type == 2 && item.status == 0 && item.payment == 1}}" style="float:right;color:red;"><navigator url="/pages/freight/send?freight_id={{item.id}}">发货</navigator></view>
+                  <view wx:if="{{item.type == 2 && item.status == 1 && item.payment == 1}}" style="float:right;color:red;"><navigator url="/pages/freight/send?freight_id={{item.id}}&freight_no={{item.freight_no}}&freight_cd={{item.freight_cd}}&freight_company={{item.freight_company}}">修改运单</navigator></view>
                   <view wx:if="{{item.type == 1 && item.status == 1}}" style="float:right;color:red;" bindtap="receiveGoods" data-index="{{index}}" data-id="{{item.id}}">确认收货</view>
                 </block>
                 <block wx:else>

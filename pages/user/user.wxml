@@ -1,14 +1,45 @@
 <!--pages/user/user.wxml-->
 
 <view class="avatar-wrap">
-  <view class="avatar"><image mode="aspectFit" src="{{userInfo.avatarUrl}}"></image></view>
+  <view class="avatar"><image mode="aspectFit" src="{{api_user.avatar || '/img/default_avatar.svg'}}"></image></view>
   <view style="text-align:center;padding:20px 0;">
-    <text style="margin-right:10px;">{{userInfo.nickName}}</text>
+    <text style="margin-right:10px;">{{api_user.cname}}</text>
     <text wx:if="{{api_user.vip > 0}}" class="vip" style="color:red;border-color:red;">VIP {{api_user.vip}}</text><text wx:else class="vip">VIP 0</text>
   </view>
 </view>
 
 <mp-tabbar list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
 
-<scroll-view style="position:fixed;top:189px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+<scroll-view style="position:fixed;top:199px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+
+  <view wx:if="{{tab == 0}}" style="padding:16px;">
+    <view style="position:relative;">协助码：{{api_user.code}}<image src="/img/freight/copy.svg" style="width:16px;height:16px;margin-left:8px;" bindtap="copyCode" data-code="{{api_user.code}}"></image></view>
+    <view>将协助码发送给朋友，朋友可通过您的协助码将发货数据共享给您。</view>
+  </view>
+  
+  <block wx:if="{{tab == 1}}"><block wx:if="{{list}}">
+    <mp-cells>
+      <block wx:for="{{list}}" wx:key="id"><block wx:if="{{!item.deleted}}">
+        <mp-slideview data-index="{{index}}" data-id="{{item.id}}" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
+          <mp-cell icon="{{item.avatar || '/img/default_avatar.svg'}}" value="{{item.cname}}" footer="到期"></mp-cell>
+        </mp-slideview>
+      </block></block>
+    </mp-cells>
+  </block></block>
+
+  <view wx:if="{{tab == 1}}" style="padding:16px;">
+    <block wx:if="{{api_user.vip < 1}}">
+      您的VIP等级不够，暂不能共享发货数据给朋友，<navigator url="/pages/article/article?article_id=2" style="color:#07C160;display:inline;">查看升级方法</navigator>。
+    </block>
+    <block wx:else>
+      <button class="weui-btn" type="primary" bindtap="showDialog">添加共享</button>
+    </block>
+  </view>
+
 </scroll-view>
+
+<mp-dialog title="添加共享" show="{{dialogShow}}" mask="{{false}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
+    <view>
+      <input bindinput="codeChange" class="weui-input" placeholder="点此输入对方协助码"/>
+    </view>
+</mp-dialog>
