@@ -34,8 +34,14 @@
         </view>
       </mp-cells>
 
+      <mp-cells title="对方是否付款">
+        <mp-checkbox-group prop="freight_payment" multi="{{false}}" bindchange="paymentChange">
+          <mp-checkbox wx:for="{{paymentItems}}" wx:key="value" label="{{item.name}}" value="{{item.value}}" checked="{{item.checked}}"></mp-checkbox>
+        </mp-checkbox-group>
+      </mp-cells>
+
       <mp-cells title="发货地址" footer="">
-      <view bindtap="selectAddress" class="top-link" style="right:60px;">选择地址</view>
+        <view bindtap="selectAddress" class="top-link" style="right:60px;">选择地址</view>
         <view bindtap="clearAddress" class="top-link" style="right:0px;">清空</view>
 
         <mp-cell show-error prop="freight_from_name" title="发货人" ext-class="">

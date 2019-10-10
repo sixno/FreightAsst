@@ -1,2 +1,27 @@
 <!--pages/freight/trace.wxml-->
-<text>pages/freight/trace.wxml</text>
+
+<view class="page">
+  <view class="page__bd">
+    <view class="weui-article">
+      <view class="weui-article__h1">{{freight_company || '未知物流公司'}}</view>
+      <view class="weui-article__h2" style="padding-right:40px;positon:relative;">
+        {{freight_no}}
+        <image src="/img/freight/copy.svg" bindtap="copyFN" data-freight_no="{{freight_no}}" style="width:16px;height:16px;"></image>
+      </view>
+
+      <view class="weui-article__section" style="margin-top:20px;">
+        <view class="weui-article__h2" style="border-bottom:#ccc dashed 1rpx;padding-bottom:4px;">物流信息</view>
+        <view class="weui-article__section timeline">
+          <block wx:if="{{list}}">
+            <view class="item" wx:for="{{list}}">
+              <view style="color:#07C160;">{{item.time}}</view>
+              <view>{{item.desc}}</view>
+            </view>
+          </block>
+          <block wx:else><view style="text-align:center;">暂无物流流转信息</view></block>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>

@@ -1,0 +1,26 @@
+<!--pages/freight/send.wxml-->
+
+<view class="page">
+  <view class="page__bd">
+    <mp-form id="form" rules="{{rules}}" models="{{formData}}">
+      <mp-cells title="" footer="">
+        <mp-cell show-error prop="freight_freight_no" title="运单号" ext-class="weui-cell_label-block" style="position:relative;">
+          <input bindinput="formInputChange" data-field="freight_freight_no" class="weui-input" placeholder="请输入快递单号，可扫码获取" value="{{freight_no}}" style="padding-right:28px;"/>
+          <image src="/img/freight/scan.svg" bindtap="scanFN" style="width:24px;height:24px;position:absolute;bottom:16px;right:16px;"></image>
+        </mp-cell>
+
+        <mp-cell show-error prop="address_tel" title="">
+          <picker range="{{express_list}}" range-key="name" value="0" bindchange="companyChange">
+            <view class="picker">
+              快递公司（点此选择）
+            </view>
+          </picker>
+          <input bindinput="formInputChange" data-field="freight_freight_company" class="weui-input" placeholder="请选择，手工填写可能无法跟踪物流" value="{{freight_company}}" disabled="{{company_lock}}"/>
+        </mp-cell>
+      </mp-cells>
+    </mp-form>
+    <view class="weui-btn-area">
+      <button class="weui-btn" type="primary" bindtap="submitForm">确定发货</button>
+    </view>
+  </view>
+</view>

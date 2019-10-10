@@ -1,7 +1,7 @@
 <!--pages/address/list.wxml-->
 
 <block wx:if="{{!tab}}">
-  <view style="position:fixed;top:0;bottom:60px;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+  <view style="position:fixed;top:0;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
     <mp-cells>
       <block wx:for="{{list}}" wx:key="id"><block wx:if="{{!item.deleted}}">
         <mp-slideview data-index="{{index}}" data-id="{{item.id}}" buttons="{{slideButtons}}" data-copy="{{item.name}} {{item.tel}} {{item.full}}" bindbuttontap="slideButtonTap">
@@ -23,4 +23,4 @@
   </view>
 </block>
 
-<mp-tabbar style="position:fixed;bottom:0;width:100%;left:0;right:0;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}"></mp-tabbar>
+<!-- <mp-tabbar style="position:fixed;bottom:0;width:100%;left:0;right:0;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}"></mp-tabbar> -->

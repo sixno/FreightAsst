@@ -3,9 +3,7 @@ const app = getApp();
 
 Page({
   data: {
-    userInfo: wx.getStorageSync('userInfo'),
-    vip: 0,
-    vip_end_time: 0
+
   },
   getUser: function () {
     var that = this;
@@ -24,20 +22,15 @@ Page({
       });
     }
   },
-  getUserInfo: function (e) {
-    this.setData({
-      userInfo: e.detail.userInfo
-    });
-  },
   onLoad: function () {
-    this.getUser();
+    // this.getUser();
   },
   onShow: function () {
-    var that = this;
+    // var that = this;
 
-    app.refresh_page(function () {
-      that.getUser();
-    });
+    // app.refresh_page(function () {
+    //   that.getUser();
+    // });
   },
 
   /**

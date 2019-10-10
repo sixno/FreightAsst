@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    formData: {freight_from_confirm: 1},
+    formData: {freight_from_confirm: 1,freight_payment: 0},
     rules: [{
       name: 'freight_from_name',
       rules: [{ required: true, message: '发货人必填' }],
@@ -18,6 +18,10 @@ Page({
       name: 'freight_from_address',
       rules: [{ required: true, message: '地址必填' }],
     }],
+    paymentItems: [
+      { name: '未付款', value: '0', checked: true },
+      { name: '已付款/无需付款', value: '1' }
+    ],
     contents: [],
     address: {},
     address_lock: false
@@ -127,6 +131,11 @@ Page({
     update['formData.freight_from_zipcode'] = '';
 
     that.setData(update);
+  },
+  paymentChange: function(e) {
+    var val = e.detail.value;
+
+    this.setData({ ['formData.freight_payment']: val});
   },
   formInputChange: function (e) {
     const { field } = e.currentTarget.dataset;

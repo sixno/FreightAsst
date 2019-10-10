@@ -19,7 +19,74 @@ Page({
     },
     {
       text: "发货"
+    },
+    {
+      text: "订单"
     }]
+  },
+  paymentOK: function(e){
+    var that = this;
+    var freight_id = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+
+    wx.showModal({
+      title: '是否确认收款',
+      content: '确认收款后该记录将进入发货列表，请确认钱款已实际到账',
+      success: function (res) {
+        console.log(res);
+
+        if (res.confirm) {
+          app.api_request('freight/mod',{freight_id: freight_id,payment: 1},function(res){
+            if(res.out == 1)
+            {
+              that.setData({['list['+index+'].payment']: 1});
+            }
+          });
+        }
+      }
+    });
+  },
+  receiveGoods: function (e) {
+    var that = this;
+    var freight_id = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+
+    wx.showModal({
+      title: '是否确认收货',
+      content: '确认收货后，该记录从收货列表中移除',
+      success: function (res) {
+        console.log(res);
+
+        if (res.confirm) {
+          app.api_request('freight/mod', { freight_id: freight_id, status: 2 }, function (res) {
+            if (res.out == 1) {
+              that.setData({ ['list[' + index + '].status']: 2 });
+            }
+          });
+        }
+      }
+    });
+  },
+  delFreight: function (e) {
+    var that = this;
+    var freight_id = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+
+    wx.showModal({
+      title: '是否删除该货运单',
+      content: '请注意，删除后不可恢复',
+      success: function (res) {
+        console.log(res);
+
+        if (res.confirm) {
+          app.api_request('freight/del', { freight_id: freight_id}, function (res) {
+            if (res.out == 1) {
+              that.setData({ ['list[' + index + '].deleted']: 1 });
+            }
+          });
+        }
+      }
+    });
   },
   tabChange(e) {
     var index = e.detail.index;
@@ -42,10 +109,46 @@ Page({
 
         this.getList('0');
         break;
+
+      case 3:
+        this.setData({ tab: 3, type: 'order', status: '0' });
+
+        this.getList('0');
+        break;
     }
   },
-  cancelSearch: function(){
-    console.log('cancelSearch');
+  search: function (value) {
+    return new Promise((resolve, reject) => {
+      // setTimeout(() => {
+      //   resolve([{ text: '搜索结果', value: 1 }, { text: '搜索结果2', value: 2 }])
+      // }, 200)
+      reject('');
+    })
+  },
+  selectResult: function (e) {
+    console.log('select result', e.detail)
+  },
+  searchInput: function (e) {
+    var line = this.data.tab == 0 ? '-' : '0';
+    var search = e.detail.value;
+
+    this.setData({ search_value: search });
+
+    this.getList(line);
+  },
+  clearSearchInput: function (e) {
+    var line = this.data.tab == 0 ? '-' : '0';
+
+    this.setData({ search_value: '' });
+
+    this.getList(line);
+  },
+  cancelSearch: function (e) {
+    var line = this.data.tab == 0 ? '-' : '0';
+
+    this.setData({search_value: ''});
+
+    this.getList(line);
   },
   getList: function(line,type,status,search)
   {
@@ -97,6 +200,14 @@ Page({
 
       that.setData(data);
     });
+  },
+  reachEnd: function (e) {
+    // console.log(e);
+    var line = this.data.line;
+
+    if (line.indexOf('end') !== -1) return;
+
+    this.getList(line);
   },
 
   /**

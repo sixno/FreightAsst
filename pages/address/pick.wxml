@@ -8,3 +8,7 @@
     </mp-cell>
   </block>
 </mp-cells>
+
+<view class="weui-btn-area">
+  <navigator url="/pages/address/list"><button type="primary">地址管理</button></navigator>
+</view>

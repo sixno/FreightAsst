@@ -3,6 +3,11 @@
 .avatar-wrap {
   background: linear-gradient(#1B827E, rgb(21, 107, 104));
   color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .avatar-wrap .avatar image {
@@ -20,6 +25,13 @@
 
 .weui-tabbar:before {
   border: none !important;
+}
+
+.top-tabbar {
+  width: 100%;
+  position: fixed !important;
+  left: 0;
+  top: 161px;
 }
 
 .top-tabbar image {

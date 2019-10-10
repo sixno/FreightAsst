@@ -3,21 +3,19 @@
 <view class="page">
   <view class="page__bd">
     <view class="weui-article">
-      <block wx:if="{{type == 0}}">
-        <view class="weui-article__h1" style="float:left;">发往：</view>
-        <view style="margin-left:40px;">{{to_address || '未填写'}}</view>
-      </block>
-      <block wx:else>
+      <block wx:if="{{type == 1}}">
         <view class="weui-article__h1" style="float:left;">来自：</view>
         <view style="margin-left:40px;">{{from_address || '未填写'}}</view>
+      </block>
+      <block wx:else>
+        <view class="weui-article__h1" style="float:left;">发往：</view>
+        <view style="margin-left:40px;">{{to_address || '未填写'}}</view>
       </block>
 
       <view style="clear:both;"></view>
 
       <block wx:if="{{status > 0}}">
-        <view>{{freight_company}}：{{freight_no}}</view>
-        <view>跟踪</view>
-        <view>复制</view>
+        <view>{{freight_company}}：<navigator url="/pages/freight/trace?freight_no={{freight_no}}&freight_cd={{freight_cd}}&freight_company={{freight_company}}" style="color:#07C160;float:right;">{{freight_no}}</navigator></view>
       </block>
 
       <view class="weui-article__section">
@@ -27,7 +25,7 @@
             <block wx:for="{{content}}" wx:key="id">
               <mp-cell wx:if="{{item.goods_id != 0}}">
                 <view class="weui-cell__hd">
-                  <view class="weui-cell__bd" style="width:120px;float:left;">{{item.name}}</view>
+                  <navigator url="/pages/goods/item?goods_id={{item.goods_id}}"><view class="weui-cell__bd" style="width:120px;float:left;color:#07C160;">{{item.name}}</view></navigator>
                   <view style="margin-left:130px;">{{item.model}}{{item.detail}}{{item.unit}}</view>
                 </view>
               </mp-cell>
@@ -42,57 +40,156 @@
       <block wx:if="{{from_confirm == 1}}">
         <view class="weui-article__section">
           <view class="weui-article__h2">发货地址</view>
-          <view class="weui-article__section"></view>
+          <view class="weui-article__section">
+            <view class="address-row">
+              <view class="address-row-l">发货人</view>
+              <view class="address-row-r">{{from_name || '　'}}</view>
+            </view>
+            <view class="address-row">
+              <view class="address-row-l">联系方式</view>
+              <view class="address-row-r">{{from_tel || '　'}}</view>
+            </view>
+            <view class="address-row">
+              <view class="address-row-l">地址</view>
+              <view class="address-row-r">{{from_address || '　'}}</view>
+            </view>
+            <view class="address-row">
+              <view class="address-row-l">邮编</view>
+              <view class="address-row-r">{{from_zipcode || '　'}}</view>
+            </view>
+          </view>
         </view>
       </block>
       <block wx:else>
-        <view class="weui-article__section" wx:if="{{type == 0}}">
+        <view class="weui-article__section" wx:if="{{type == 2}}">
           <view class="weui-article__h2">发货地址</view>
-          <view class="weui-article__section">确定</view>
+          <view class="weui-article__section">
+            <mp-form id="form" rules="{{rules2}}" models="{{formData}}">
+              <mp-cells title="" footer="">
+                <view bindtap="selectAddress2" class="top-link" style="right:60px;">选择地址</view>
+                <view bindtap="clearAddress2" class="top-link" style="right:0px;">清空</view>
+
+                <mp-cell show-error prop="freight_from_name" title="发货人" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_from_name" class="weui-input" placeholder="请输入发货人" value="{{address.name}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+
+                <mp-cell show-error prop="freight_from_tel" title="联系方式" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_from_tel" class="weui-input" placeholder="请输入联系方式" value="{{address.tel}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+
+                <mp-cell show-error prop="freight_from_address" title="地址" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_from_address" class="weui-input" placeholder="请输入地址" value="{{address.full}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+
+                <mp-cell show-error prop="freight_from_zipcode" title="邮编" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_from_zipcode" class="weui-input" placeholder="请输入邮编" value="{{address.zipcode}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+              </mp-cells>
+
+              <mp-cells title="对方是否付款">
+                <mp-checkbox-group prop="freight_payment" multi="{{false}}" bindchange="paymentChange">
+                  <mp-checkbox wx:for="{{paymentItems}}" wx:key="value" label="{{item.name}}" value="{{item.value}}" checked="{{item.checked}}"></mp-checkbox>
+                </mp-checkbox-group>
+              </mp-cells>
+            </mp-form>
+
+            <view class="weui-btn-area-padding2">
+              <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+            </view>
+          </view>
         </view>
       </block>
 
       <block wx:if="{{to_confirm == 1}}">
         <view class="weui-article__section">
           <view class="weui-article__h2">收货地址</view>
-          <view class="weui-article__section"></view>
+          <view class="weui-article__section">
+            <view class="address-row">
+              <view class="address-row-l">收货人</view>
+              <view class="address-row-r">{{to_name || '　'}}</view>
+            </view>
+            <view class="address-row">
+              <view class="address-row-l">联系方式</view>
+              <view class="address-row-r">{{to_tel || '　'}}</view>
+            </view>
+            <view class="address-row">
+              <view class="address-row-l">地址</view>
+              <view class="address-row-r">{{to_address || '　'}}</view>
+            </view>
+            <view class="address-row">
+              <view class="address-row-l">邮编</view>
+              <view class="address-row-r">{{to_zipcode || '　'}}</view>
+            </view>
+          </view>
         </view>
       </block>
       <block wx:else>
         <view class="weui-article__section" wx:if="{{type == 1}}">
           <view class="weui-article__h2">收货地址</view>
-          <view class="weui-article__section">确定</view>
+          <view class="weui-article__section">
+            <mp-form id="form" rules="{{rules1}}" models="{{formData}}">
+              <mp-cells title="" footer="">
+                <view bindtap="selectAddress1" class="top-link" style="right:60px;">选择地址</view>
+                <view bindtap="clearAddress1" class="top-link" style="right:0px;">清空</view>
+
+                <mp-cell show-error prop="freight_from_name" title="收货人" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_to_name" class="weui-input" placeholder="请输入发货人" value="{{address.name}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+
+                <mp-cell show-error prop="freight_from_tel" title="联系方式" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_to_tel" class="weui-input" placeholder="请输入联系方式" value="{{address.tel}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+
+                <mp-cell show-error prop="freight_from_address" title="地址" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_to_address" class="weui-input" placeholder="请输入地址" value="{{address.full}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+
+                <mp-cell show-error prop="freight_from_zipcode" title="邮编" ext-class="">
+                  <input bindinput="formInputChange" data-field="freight_to_zipcode" class="weui-input" placeholder="请输入邮编" value="{{address.zipcode}}" disabled="{{address_lock}}"/>
+                </mp-cell>
+              </mp-cells>
+            </mp-form>
+
+            <view class="weui-btn-area-padding2">
+              <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+            </view>
+          </view>
         </view>
       </block>
 
       <block wx:if="{{from_confirm == 0 || to_confirm == 0}}">
-        <block wx:if="{{type == 0 && to_confirm == 0}}">
-          <view class="weui-btn-area">
+        <block wx:if="{{type == 2 && to_confirm == 0}}">
+          <view class="weui-btn-area-padding2">
             <button class="weui-btn" type="primary" open-type="share">发送给收货人</button>
           </view>
         </block>
 
         <block wx:if="{{type == 1 && from_confirm == 0}}">
-          <view class="weui-btn-area">
+          <view class="weui-btn-area-padding2">
             <button class="weui-btn" type="primary" open-type="share">发送给发货人</button>
           </view>
         </block>
       </block>
       <block wx:else>
-        <block wx:if="{{type == 0 && status == 0}}">
-        发货
+        <block wx:if="{{type == 2 && status == 0 && payment == 0 && from_confirm == 1}}">
+          <view class="weui-btn-area-padding2">
+            <button class="weui-btn" type="primary" bindtap="paymentOK" data-id="{{id}}">确认收款</button>
+          </view>
+        </block>
+
+        <block wx:if="{{type == 2 && status == 0 && payment == 1}}">
+          <view class="weui-btn-area-padding2">
+            <navigator url="/pages/freight/send?freight_id={{id}}&from=item"><button class="weui-btn" type="primary">发货</button></navigator>
+          </view>
         </block>
 
         <block wx:if="{{type == 1 && status == 1}}">
-        收货
+          <view class="weui-btn-area-padding2">
+            <button class="weui-btn" type="primary" bindtap="receiveGoods" data-id="{{id}}">确认收货</button>
+          </view>
         </block>
       </block>
 
     </view>
   </view>
 </view>
-
-
-
-
-

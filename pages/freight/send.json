@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "地址编辑",
+  "navigationBarTitleText": "发货",
   "usingComponents": {
     "mp-cell": "/weui/cell/cell",
     "mp-cells": "/weui/cells/cells",

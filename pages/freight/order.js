@@ -243,7 +243,7 @@ Page({
 
       var update = {
         ['contents[0]']: {
-          goods_id: goods.goods_id,
+          goods_id: goods.id,
           name: goods.name,
           model: goods.model,
           unit: goods.unit,
@@ -251,7 +251,8 @@ Page({
         }
       };
 
-      update['formData.freight_content_goods_id_0'] = goods.goods_id;
+      update['formData.freight_from_user_id'] = goods.user_id;
+      update['formData.freight_content_goods_id_0'] = goods.id;
       update['formData.freight_content_name_0'] = goods.name;
       update['formData.freight_content_model_0'] = goods.model;
       update['formData.freight_content_unit_0'] = goods.unit;

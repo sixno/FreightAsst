@@ -1,14 +1,14 @@
 <!--pages/recent/recent.wxml-->
 
 
-<mp-searchbar style="position:fixed;top:0;left:0;width:100%;" placeholder="请输入关键字搜索" bindselectresult="selectResult" search="{{search}}" bindcancel="cancelSearch"></mp-searchbar>
+<mp-searchbar style="position:fixed;top:0;left:0;width:100%;" placeholder="请输入关键字搜索" bindinput="searchInput" bindclear="clearSearchInput" bindcancel="cancelSearch" search="{{search}}" value="{{search_value}}"></mp-searchbar>
 
 <mp-tabbar style="position:fixed;top:48px;width:100%;left:0;right:0;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
 
 <scroll-view bindscrolltolower="reachEnd" scroll-y style="position:fixed;top:86px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
   <block wx:if="{{list}}">
     <block wx:for="{{list}}" wx:key="id">
-      <view class="weui-panel">
+      <view class="weui-panel" wx:if="{{!item.deleted}}">
         <view class="weui-panel__bd">
           <view class="weui-media-box weui-media-box_text">
               <view class="weui-media-box__title weui-media-box__title_in-text">
@@ -17,7 +17,10 @@
                   待填写
                   </block>
                   <block wx:else="">
-                    <block wx:if="{{item.status == 0}}">
+                    <block wx:if="{{item.status == 0 && item.payment == 0}}">
+                      <block wx:if="{{item.type == 1}}">待付款</block><block wx:else>待收款</block>
+                    </block>
+                    <block wx:if="{{item.status == 0 && item.payment == 1}}">
                     待发货
                     </block>
                     <block wx:if="{{item.status == 1}}">
@@ -29,19 +32,21 @@
                   </block>
                 </view>
                 <view class="panel-address">
-                  <block wx:if="{{item.type == 0}}">
-                    发往：{{item.to_address}}
+                  <block wx:if="{{item.type == 1}}">
+                    来自：{{item.from_address}}
                   </block>
                   <block wx:else>
-                    来自：{{item.from_address}}
+                    发往：{{item.to_address}}
                   </block>
                 </view>
               </view>
               <view class="weui-media-box__desc">
                 <block wx:if="{{item.status > 0}}">
-                  <view>{{item.freight_company}}：{{item.freight_no}}</view>
-                  <view>跟踪</view>
-                  <view>复制</view>
+                  
+                  <view style="border-bottom: #ccc dashed 1rpx;padding-bottom:4px;margin-bottom:4px;padding-right:60px;position:relative;">
+                    <text>{{item.freight_company}}：{{item.freight_no}}</text>
+                    <navigator url="/pages/freight/trace?freight_no={{item.freight_no}}&freight_cd={{item.freight_cd}}&freight_company={{item.freight_company}}" style="color:#07C160;position:absolute;top:0;right:0;">查看物流</navigator>
+                  </view>
                 </block>
                 <view>
                   <block wx:if="{{item.content}}">
@@ -54,8 +59,18 @@
               </view>
               <view class="weui-media-box__info">
                 <block wx:if="{{item.from_confirm == 1 && item.to_confirm == 1}}">
-                  <view wx:if="{{item.type == 1 && item.status == 0}}" style="float:right;color:red;">发货</view>
-                  <view wx:if="{{item.type == 0 && item.status == 1}}" style="float:right;color:red;">收货</view>
+                  <view wx:if="{{item.type == 1 && item.status == 0 && item.payment == 0}}" style="float:right;color:red;">
+                    <text bindtap="delFreight" data-id="{{item.id}}" data-index="{{index}}" style="margin-right:8px;">删除</text>
+                  </view>
+                  <view wx:if="{{item.type == 2 && item.status == 0 && item.payment == 0}}" style="float:right;color:red;">
+                    <text bindtap="delFreight" data-id="{{item.id}}" data-index="{{index}}" style="margin-right:8px;">删除</text>
+                    <text bindtap="paymentOK" data-id="{{item.id}}" data-index="{{index}}">确认收款</text>
+                  </view>
+                  <view wx:if="{{item.type == 2 && item.status == 0 && item.payment == 1}}" style="float:right;color:red;"><navigator url="/pages/freight/send?freight_id={{item.id}}&from=list">发货</navigator></view>
+                  <view wx:if="{{item.type == 1 && item.status == 1}}" style="float:right;color:red;" bindtap="receiveGoods" data-index="{{index}}" data-id="{{item.id}}">确认收货</view>
+                </block>
+                <block wx:else>
+                  <view style="float:right;color:red;" bindtap="delFreight" data-index="{{index}}" data-id="{{item.id}}">删除</view>
                 </block>
 
                 <view class="weui-media-box__info__meta">{{item.create_time}}</view>

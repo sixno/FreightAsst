@@ -21,6 +21,7 @@
     "pages/freight/order",
     "pages/freight/mod",
     "pages/freight/item",
+    "pages/freight/send",
     "pages/freight/trace"
   ],
   "window": {

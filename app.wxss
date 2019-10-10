@@ -18,6 +18,10 @@
   padding: 48px 16px 8px;
 }
 
+.weui-btn-area-padding2 {
+  padding: 48px 0 8px;
+}
+
 .block, .wrap {
   padding: 16px;
 }
@@ -79,10 +83,6 @@
 .col view {
   display: flex;
   justify-content: center;
-}
-
-.row .col-r {
-  /* border-left: #aaa dashed 1px; */
 }
 
 .col image {

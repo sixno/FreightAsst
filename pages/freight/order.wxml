@@ -34,7 +34,7 @@
       </mp-cells>
 
       <mp-cells title="收货地址" footer="">
-      <view bindtap="selectAddress" class="top-link" style="right:60px;">选择地址</view>
+        <view bindtap="selectAddress" class="top-link" style="right:60px;">选择地址</view>
         <view bindtap="clearAddress" class="top-link" style="right:0px;">清空</view>
 
         <mp-cell show-error prop="freight_to_name" title="收货人" ext-class="">

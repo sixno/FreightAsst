@@ -73,11 +73,12 @@ Page({
       {
         var goods = {};
 
-        goods.goods_id = that.data.id;
+        goods.id = that.data.id;
         goods.name = that.data.name;
         goods.model = sizes[index].model;
         goods.unit = sizes[index].unit;
         goods.detail = sizes[index].detail;
+        goods.user_id = that.data.user_id;
 
         wx.navigateTo({
           url: '/pages/freight/order?goods=' + encodeURIComponent(JSON.stringify(goods))

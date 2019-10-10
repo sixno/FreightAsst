@@ -1,1 +1,16 @@
 /* pages/freight/item.wxss */
+
+.top-link {
+  position: absolute;
+  top: -30px;
+  color: #07C160;
+}
+
+.address-row-l {
+  width: 72px;
+  float: left;
+}
+
+.address-row-r {
+  margin-left: 80px;
+}

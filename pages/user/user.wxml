@@ -1,6 +1,6 @@
 <!--pages/user/user.wxml-->
 
-<view class="avatar-wrap" style="width:100%;box-sizing:border-box;">
+<view class="avatar-wrap">
   <view class="avatar"><image mode="aspectFit" src="{{userInfo.avatarUrl}}"></image></view>
   <view style="text-align:center;padding:20px 0;">
     <text style="margin-right:10px;">{{userInfo.nickName}}</text>
@@ -8,7 +8,7 @@
   </view>
 </view>
 
-<mp-tabbar style="width:100%;" list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
+<mp-tabbar list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
 
-<view style="position:fixed;top:189px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
-</view>
+<scroll-view style="position:fixed;top:189px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+</scroll-view>

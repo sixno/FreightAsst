@@ -124,11 +124,28 @@ Page({
       update['formData.freight_content_unit_' + idx] = item.size[index].unit;
       update['formData.freight_content_detail_' + idx] = item.size[index].detail;
 
+      if(app.dat_page.data.formData.freight_from_user_id)
+      {
+        if (item.user_id != app.dat_page.data.formData.freight_from_user_id)
+        {
+          wx.showToast({
+            title: '您要添加的货品与已选货品发货人不是同一人',
+            icon: 'none'
+          });
+
+          return ;
+        }
+      }
+      else
+      {
+        update['formData.freight_from_user_id'] = item.user_id;
+      }
+
       app.dat_page.setData(update);
 
       app.dat_page = null;
 
-      wx.navigateBack({});
+      wx.navigateBack();
     }
   },
 
