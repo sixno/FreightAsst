@@ -220,6 +220,13 @@ Page({
         res.data.formData = {};
         res.data.formData.freight_id = res.data.id;
 
+        if (res.data.type == 1) {
+          res.data.formData.freight_to_confirm = 1;
+        }
+        else {
+          res.data.formData.freight_from_confirm = 1;
+        }
+
         if (res.data.type == 2 && res.data.from_confirm != 1)
         {
           res.data.formData.freight_payment = 0;
@@ -242,7 +249,6 @@ Page({
                 update['formData.freight_to_tel'] = address.data.tel;
                 update['formData.freight_to_address'] = address.data.full;
                 update['formData.freight_to_zipcode'] = address.data.zipcode;
-                update['formData.freight_to_confirm'] = 1;
               }
               else
               {
@@ -251,7 +257,6 @@ Page({
                 update['formData.freight_from_tel'] = address.data.tel;
                 update['formData.freight_from_address'] = address.data.full;
                 update['formData.freight_from_zipcode'] = address.data.zipcode;
-                update['formData.freight_from_confirm'] = 1;
               }
 
               that.setData(update);
