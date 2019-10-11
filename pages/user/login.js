@@ -68,7 +68,10 @@ Page({
     if (!e.detail.userInfo) {
       return;
     }
-    wx.setStorageSync('userInfo', e.detail.userInfo)
+    wx.setStorageSync('userInfo', e.detail.userInfo);
+
+    app.sync_userInfo();
+
     this.checkSessionAndLogin();
   },
   checkSessionAndLogin: function () {

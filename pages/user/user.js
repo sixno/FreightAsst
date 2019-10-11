@@ -65,8 +65,9 @@ Page({
       {
         for(var i in res.data)
         {
-          res.data[i].freight_share_end_time = app.date('yyyy年MM月dd日', res.data.freight_share_end_time);
+          res.data[i].freight_share_end_time = app.date('yyyy年MM月dd日', res.data[i].freight_share_end_time);
         }
+
         if(tab == 0)
         {
           that.setData({list0: res.data});
