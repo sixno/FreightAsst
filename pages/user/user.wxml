@@ -10,22 +10,32 @@
 
 <mp-tabbar list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>
 
-<scroll-view style="position:fixed;top:199px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
+<scroll-view scroll-y style="position:fixed;top:199px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
 
   <view wx:if="{{tab == 0}}" style="padding:16px;">
     <view style="position:relative;">协助码：{{api_user.code}}<image src="/img/freight/copy.svg" style="width:16px;height:16px;margin-left:8px;" bindtap="copyCode" data-code="{{api_user.code}}"></image></view>
     <view>将协助码发送给朋友，朋友可通过您的协助码将发货数据共享给您。</view>
   </view>
-  
-  <block wx:if="{{tab == 1}}"><block wx:if="{{list}}">
+
+  <block wx:if="{{tab == 0 && list0.length}}">
     <mp-cells>
-      <block wx:for="{{list}}" wx:key="id"><block wx:if="{{!item.deleted}}">
-        <mp-slideview data-index="{{index}}" data-id="{{item.id}}" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
-          <mp-cell icon="{{item.avatar || '/img/default_avatar.svg'}}" value="{{item.cname}}" footer="到期"></mp-cell>
+      <block wx:for="{{list0}}" wx:key="id">
+        <mp-slideview data-index="{{index}}" data-id="{{item.freight_share_id}}" buttons="{{slideButtons0}}" bindbuttontap="slideButtonTap">
+          <mp-cell icon="{{item.avatar || '/img/default_avatar.svg'}}" value="{{item.cname}}" footer="{{item.freight_share_end_time}}到期"></mp-cell>
         </mp-slideview>
-      </block></block>
+      </block>
     </mp-cells>
-  </block></block>
+  </block>
+  
+  <block wx:if="{{tab == 1 && list1.length}}">
+    <mp-cells>
+      <block wx:for="{{list1}}" wx:key="id">
+        <mp-slideview data-index="{{index}}" data-id="{{item.freight_share_id}}" buttons="{{slideButtons1}}" bindbuttontap="slideButtonTap">
+          <mp-cell icon="{{item.avatar || '/img/default_avatar.svg'}}" value="{{item.cname}}" footer="{{item.freight_share_end_time}}到期"></mp-cell>
+        </mp-slideview>
+      </block>
+    </mp-cells>
+  </block>
 
   <view wx:if="{{tab == 1}}" style="padding:16px;">
     <block wx:if="{{api_user.vip < 1}}">
@@ -40,6 +50,6 @@
 
 <mp-dialog title="添加共享" show="{{dialogShow}}" mask="{{false}}" mask-closable="{{false}}" bindbuttontap="tapDialogButton" buttons="{{buttons}}">
     <view>
-      <input bindinput="codeChange" class="weui-input" placeholder="点此输入对方协助码"/>
+      <input bindinput="codeChange" class="weui-input" placeholder="点此输入对方协助码" value="{{formCode}}"/>
     </view>
 </mp-dialog>

@@ -108,21 +108,34 @@ Page({
 
         app.api_request('freight/mod', data, function (res) {
           if (res.out == 1) {
-            var cps = getCurrentPages();
-
-            for (var i in cps) {
-              if (cps[i].route == 'pages/recent/recent') {
-                for (var j in cps[i].data.list) {
-                  if (cps[i].data.list[j].id == data.freight_id) {
-                    cps[i].setData({ ['list[' + j + ']']: res.data });
+            app.update_cp({
+              'pages/recent/recent': function(cp){
+                for (var i in cp.data.list) {
+                  if (cp.data.list[i].id == data.freight_id) {
+                    cp.setData({ ['list[' + i + ']']: res.data });
                   }
                 }
+              },
+              'pages/freight/item': function(cp){
+                cp.setData(res.data);
               }
+            });
 
-              if (cps[i].route == 'pages/freight/item') {
-                cps[i].setData(res.data);
-              }
-            }
+            // var cps = getCurrentPages();
+
+            // for (var i in cps) {
+            //   if (cps[i].route == 'pages/recent/recent') {
+            //     for (var j in cps[i].data.list) {
+            //       if (cps[i].data.list[j].id == data.freight_id) {
+            //         cps[i].setData({ ['list[' + j + ']']: res.data });
+            //       }
+            //     }
+            //   }
+
+            //   if (cps[i].route == 'pages/freight/item') {
+            //     cps[i].setData(res.data);
+            //   }
+            // }
 
             wx.navigateBack();
           }

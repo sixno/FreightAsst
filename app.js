@@ -129,13 +129,15 @@ App({
 
     return api_user[key];
   },
-  check_login: function () {
+  check_login: function (callback) {
     var that = this;
 
     this.api_request('user/current','',function(res){
       if(res.out == 1)
       {
         wx.setStorageSync('api_user',res.data);
+
+        if(callback) callback(res);
 
         wx.getSetting({
           success: function (res) {
@@ -237,6 +239,27 @@ App({
     var path = '/' + cp.route + query;
 
     return {path: path};
+  },
+  update_cp: function(page,callback){
+    var cps = getCurrentPages();
+
+    for(var i in cps)
+    {
+      if(typeof(page) == 'string')
+      {
+        if(page == cps[i].route)
+        {
+          callback(cps[i]);
+        }
+      }
+      else {
+        for (var j in page) {
+          if (j == cps[i].route) {
+            page[j](cps[i]);
+          }
+        }
+      }
+    }
   },
   dat_page: null,
   refresh_show: false,
