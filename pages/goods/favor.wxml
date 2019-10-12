@@ -3,7 +3,7 @@
 <mp-searchbar style="position:fixed;top:0;left:0;width:100%;z-index:1000000;" placeholder="请输入关键字搜索" bindinput="searchInput" bindclear="clearSearchInput" search="{{search}}" value="{{search_value}}"></mp-searchbar>
 
 <scroll-view bindscrolltolower="reachEnd" scroll-y style="position:fixed;top:48px;bottom:0;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
-  <block wx:if="{{list}}">
+  <block wx:if="{{list.length > 0}}">
     <mp-cells>
       <block wx:for="{{list}}" wx:key="id"><block wx:if="{{!item.deleted}}">
         <mp-slideview bindshow="slideShow" bindhide="slideHide" data-index="{{index}}" data-id="{{item.id}}" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
@@ -11,5 +11,10 @@
         </mp-slideview>
       </block></block>
     </mp-cells>
+  </block>
+  <block wx:else>
+    <view style="padding:16px;">
+      您暂无收藏任何货品，货品收藏可来源于历史货运单、朋友转发给您的货品详情或从自己的<navigator url="/pages/goods/list" style="display:inline;color:#07C160;">货品管理</navigator>列表中查看详情并收藏（尽管收藏自己的货品意义并不大）。
+    </view>
   </block>
 </scroll-view>

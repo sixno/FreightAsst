@@ -1,24 +1,35 @@
 <!--pages/goods/pick.wxml-->
 
 <view class="weui-cells weui-cells_after-title">
-  <block wx:for="{{list}}" wx:key="id">
-    <view class="weui-cell">
-        <view class="weui-cell__hd">
-            <image src="{{item.cover}}" style="margin-right: 16px;vertical-align: middle;width:20px; height: 20px;"></image>
-        </view>
-        <view class="weui-cell__bd">{{item.name}}</view>
-    </view>
-    <view class="sizes-cell">
-      <view class="weui-cell" wx:for="{{item.size}}" wx:for-index="idx" wx:for-item="itm">
-        <view class="weui-cell__bd size-model">{{itm.model}}</view>
-        <view class="weui-cell__hd size-detail">
-          <view class="round-minus" bindtap="detailMinus" data-g_idx="{{index}}" data-index="{{idx}}" data-value="{{itm.detail || 0}}">-</view>
-          <input class="weui-input"  bindinput="detailChange" data-g_idx="{{index}}" data-index="{{idx}}" data-value="{{itm.detail || 0}}" value="{{itm.detail || 0}}"/>
-          <view class="round-plus" bindtap="detailPlus" data-g_idx="{{index}}" data-index="{{idx}}" data-value="{{itm.detail || 0}}">+</view>
-        </view>
-        <view class="weui-cell__hd size-unit">{{itm.unit}}</view>
-        <view class="buy" bindtap="addGoods" data-g_idx="{{index}}" data-index="{{idx}}">添加</view>
+  <block wx:if="{{list.length > 0}}">
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="weui-cell">
+          <view class="weui-cell__hd">
+              <image src="{{item.cover}}" style="margin-right: 16px;vertical-align: middle;width:20px; height: 20px;"></image>
+          </view>
+          <view class="weui-cell__bd">{{item.name}}</view>
       </view>
+      <view class="sizes-cell">
+        <view class="weui-cell" wx:for="{{item.size}}" wx:for-index="idx" wx:for-item="itm">
+          <view class="weui-cell__bd size-model">{{itm.model}}</view>
+          <view class="weui-cell__hd size-detail">
+            <view class="round-minus" bindtap="detailMinus" data-g_idx="{{index}}" data-index="{{idx}}" data-value="{{itm.detail || 0}}">-</view>
+            <input class="weui-input"  bindinput="detailChange" data-g_idx="{{index}}" data-index="{{idx}}" data-value="{{itm.detail || 0}}" value="{{itm.detail || 0}}"/>
+            <view class="round-plus" bindtap="detailPlus" data-g_idx="{{index}}" data-index="{{idx}}" data-value="{{itm.detail || 0}}">+</view>
+          </view>
+          <view class="weui-cell__hd size-unit">{{itm.unit}}</view>
+          <view class="buy" bindtap="addGoods" data-g_idx="{{index}}" data-index="{{idx}}">添加</view>
+        </view>
+      </view>
+    </block>
+  </block>
+  <block wx:else>
+    <view style="padding:16px;" wx:if="{{favor == 1}}">
+      您暂无收藏任何货品，货品收藏可来源于历史货运单、朋友转发给您的货品详情或从自己的<navigator url="/pages/goods/list" style="display:inline;color:#07C160;">货品管理</navigator>列表中查看详情并收藏（尽管收藏自己的货品意义并不大）。
+    </view>
+    <view style="padding:16px;" wx:else>
+      <view style="margin-bottom:16px;">您的货品管理列表中暂无货品，您可以点击下面的按钮进行：</view>
+      <navigator url="/pages/goods/list"><button class="weui-btn" type="primary">货品管理</button></navigator>
     </view>
   </block>
 </view>

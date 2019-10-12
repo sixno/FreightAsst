@@ -3,7 +3,7 @@
 <mp-searchbar style="position:fixed;top:0;left:0;width:100%;z-index:1000000;" placeholder="请输入关键字搜索" bindinput="searchInput" bindclear="clearSearchInput" search="{{search}}" value="{{search_value}}" bindcancel="cancelSearch"></mp-searchbar>
 
 <scroll-view bindscrolltolower="reachEnd" scroll-y style="position:fixed;top:48px;bottom:60px;left:0;width:100%;overflow:auto;-webkit-overflow-scrolling: touch;">
-  <block wx:if="{{list}}">
+  <block wx:if="{{list.length > 0}}">
     <mp-cells>
       <block wx:for="{{list}}" wx:key="id"><block wx:if="{{!item.deleted}}">
         <mp-slideview bindshow="slideShow" bindhide="slideHide" data-index="{{index}}" data-id="{{item.id}}" buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
@@ -11,6 +11,9 @@
         </mp-slideview>
       </block></block>
     </mp-cells>
+  </block>
+  <block wx:else>
+    <view style="padding:16px;">您的货品管理列表中暂无任何货品，您可以点击下方“添加货品”按钮添加。</view>
   </block>
 </scroll-view>
 

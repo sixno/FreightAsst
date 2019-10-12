@@ -135,13 +135,15 @@ App({
     this.api_request('user/current','',function(res){
       if(res.out == 1)
       {
+        var res_for_callback = res;
+
         wx.setStorageSync('api_user',res.data);
 
         wx.getSetting({
           success: function (res) {
             if (res.authSetting['scope.userInfo'])
             {
-              if (callback) callback(res);
+              if (callback) callback(res_for_callback);
 
               wx.getUserInfo({
                 success: function(res){
