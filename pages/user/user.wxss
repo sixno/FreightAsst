@@ -53,3 +53,7 @@
   height: 32px;
   border-radius: 16px;
 }
+
+.avatar-wrap button:after {
+  border: none;
+}

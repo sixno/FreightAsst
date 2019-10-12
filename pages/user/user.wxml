@@ -1,11 +1,19 @@
 <!--pages/user/user.wxml-->
 
 <view class="avatar-wrap">
-  <view class="avatar"><image mode="aspectFit" src="{{api_user.avatar || '/img/default_avatar.svg'}}"></image></view>
-  <view style="text-align:center;padding:20px 0;">
-    <text style="margin-right:10px;">{{api_user.cname}}</text>
-    <text wx:if="{{api_user.vip > 0}}" class="vip" style="color:red;border-color:red;">VIP {{api_user.vip}}</text><text wx:else class="vip">VIP 0</text>
-  </view>
+  <block wx:if="{{!need_get_userInfo}}">
+    <view class="avatar"><image mode="aspectFit" src="{{api_user.avatar || '/img/default_avatar.svg'}}"></image></view>
+    <view style="text-align:center;padding:20px 0;">
+      <text style="margin-right:10px;">{{api_user.cname}}</text>
+      <text wx:if="{{api_user.vip > 0}}" class="vip" style="color:red;border-color:red;">VIP {{api_user.vip}}</text><text wx:else class="vip">VIP 0</text>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="avatar"><image mode="aspectFit" src="/img/default_avatar.svg"></image></view>
+    <view style="text-align:center;padding:20px 0;">
+      <button open-type="getUserInfo" bindgetuserinfo="syncUserInfo" style="color:#fff;border:none;background:none;">未登录</button>
+    </view>
+  </block>
 </view>
 
 <mp-tabbar list="{{tabs}}" bindchange="tabChange" current="{{tab}}" ext-class="top-tabbar"></mp-tabbar>

@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    need_get_userInfo: true,
     formCode: '',
     dialogShow: false,
     buttons: [{ text: '取消' }, { text: '确定' }],
@@ -198,6 +199,21 @@ Page({
       dialogShow: false
     });
   },
+  syncUserInfo: function(e){
+    var that = this;
+
+    if (!e.detail.userInfo) return ;
+
+    wx.setStorageSync('userInfo', e.detail.userInfo);
+
+    app.sync_userInfo(function (res) {
+      if (res.out == 1) {
+        wx.setStorageSync('api_user', res.data);
+
+        that.setData({api_user: res.data,need_get_userInfo: false});
+      }
+    });
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -221,8 +237,10 @@ Page({
     app.check_login(function(res){
       if(res.out == 1)
       {
-        that.setData({ api_user: res.data });
+        that.setData({ need_get_userInfo: false, api_user: res.data });
       }
+    },function(){
+      that.setData({ need_get_userInfo: true });
     });
 
     this.getList();

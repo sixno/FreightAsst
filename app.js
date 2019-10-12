@@ -129,7 +129,7 @@ App({
 
     return api_user[key];
   },
-  check_login: function (callback) {
+  check_login: function (callback,fail_get_userInfo) {
     var that = this;
 
     this.api_request('user/current','',function(res){
@@ -137,12 +137,12 @@ App({
       {
         wx.setStorageSync('api_user',res.data);
 
-        if(callback) callback(res);
-
         wx.getSetting({
           success: function (res) {
             if (res.authSetting['scope.userInfo'])
             {
+              if (callback) callback(res);
+
               wx.getUserInfo({
                 success: function(res){
                   var userInfo = wx.getStorageSync('userInfo');
@@ -167,11 +167,13 @@ App({
             }
             else
             {
-              wx.navigateTo({ url: "/pages/user/login" });
+              // wx.navigateTo({ url: "/pages/user/login" });
+              if(fail_get_userInfo) fail_get_userInfo();
             }
           },
           fail: function() {
-            wx.navigateTo({ url: "/pages/user/login" });
+            // wx.navigateTo({ url: "/pages/user/login" });
+            if (fail_get_userInfo) fail_get_userInfo();
           }
         });
       }
