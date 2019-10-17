@@ -33,6 +33,20 @@ Page({
       { name: '已付款/无需付款', value: '1' }
     ],
   },
+  copyText: function(e)
+  {
+    var name = e.target.dataset.name;
+    var text = e.target.dataset.text;
+
+    wx.setClipboardData({
+      data: text,
+      success: function (res) {
+        wx.showToast({
+          title: name + '复制成功'
+        });
+      }
+    });
+  },
   paymentOK: function (e) {
     var that = this;
     var freight_id = e.currentTarget.dataset.id;

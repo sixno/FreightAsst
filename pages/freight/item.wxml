@@ -39,7 +39,7 @@
 
       <block wx:if="{{from_confirm == 1}}">
         <view class="weui-article__section">
-          <view class="weui-article__h2">发货地址</view>
+          <view class="weui-article__h2">发货地址<image src="/img/freight/copy.svg" style="width:20px;height:20px;margin-left:10px;position:relative;top:4px;" bindtap="copyText" data-text="{{from_name}} {{from_tel}} {{from_address}}" data-name="发货地址"></image></view>
           <view class="weui-article__section">
             <view class="address-row">
               <view class="address-row-l">发货人</view>
@@ -102,7 +102,7 @@
 
       <block wx:if="{{to_confirm == 1}}">
         <view class="weui-article__section">
-          <view class="weui-article__h2">收货地址</view>
+          <view class="weui-article__h2">收货地址<image src="/img/freight/copy.svg" style="width:20px;height:20px;margin-left:10px;position:relative;top:4px;" bindtap="copyText" data-text="{{to_name}} {{to_tel}} {{to_address}}" data-name="收货地址"></image></view>
           <view class="weui-article__section">
             <view class="address-row">
               <view class="address-row-l">收货人</view>
